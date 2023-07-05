@@ -1,0 +1,34 @@
+.wrap-img {
+    width: 800px;
+    height:355px;
+    background-color: #fff;
+    img{
+        height: 300px;
+        width: 800px;
+    }
+}
+.wrap-button {
+    display: flex;
+    overflow: hidden;
+    button{
+        cursor: pointer;
+        width: 160px;
+        height: 49px;
+        border: none; 
+        font-size: 14px;
+        font-weight: 300; 
+        background-color: #fff;
+        &:hover{
+            border-bottom: 2px solid #cd1817 ;
+            color: #000;
+            font-weight: 700;
+        }
+    }
+    .active2{
+        border-bottom: 3px solid #cd1817 ;
+        color: #000;
+        button {
+            font-weight: 700;
+        }
+    }
+}

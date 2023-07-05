@@ -1,0 +1,149 @@
+.footer-total {
+    // height: 416px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: center;
+
+    .footer-upper {
+        display: flex;
+        width: 1200px;
+        padding: 25px 0px 15px 0px;
+
+        .footer-column1 {
+            width: 18%;
+            margin: 0px 12px;
+
+            ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                height: 210px;
+
+                li {
+                    margin-bottom: 18px;
+                    color: #0664f9;
+                    cursor: pointer;
+                    font-size: 14px;
+
+                    &:hover {
+                        text-decoration: underline;
+                        color: #000000;
+                    }
+                }
+            }
+
+            .box-img {
+                display: flex;
+
+                img {
+                    height: 40px;
+                }
+            }
+
+            .box-img2 {
+                display: flex;
+
+                img {
+                    height: 31px;
+                }
+            }
+        }
+
+        .footer-column2 {
+            // margin: 0px 12px;
+
+            ul {
+                margin: 0px;
+                padding: 0px;
+                list-style: none;
+
+                li {
+                    padding-bottom: 16px;
+
+                    p {
+                        margin: 0px;
+                        font-size: 14px;
+                        font-weight: 500;
+                    }
+
+                    a {
+                        text-decoration: none;
+                        color: #cb1c22;
+                        font-size: 20px;
+                        font-weight: 500;
+                    }
+                }
+            }
+
+            .box-img3 {
+                width: 195px;
+
+                img {
+                    height: 29px;
+                    margin: 1px;
+                }
+            }
+        }
+
+        .footer-column3 {
+            margin-left: 40px;
+
+            .connect-us {
+                display: flex;
+                align-items: center;
+                margin-bottom: 24px;
+
+                img {
+                    height: 24px;
+                    margin-left: 10px;
+                }
+            }
+
+            .website-fpt {
+                height: 235px;
+
+                ul {
+                    margin: 0px;
+                    padding: 0px;
+                    list-style: none;
+
+                    p {
+                        font-size: 14px;
+                        margin: 0px;
+                        padding-top: 10px;
+                    }
+
+                    img {
+                        padding-top: 5px;
+                        height: 26px;
+                    }
+                }
+            }
+        }
+    }
+
+    .footer-bottom {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        background-color: #f2f2f2;
+
+        .footer-bottom2 {
+            width: 1200px;
+
+            p {
+                font-size: 14px;
+                text-align: center;
+            }
+        }
+
+    }
+    .logo-zalo-fix {
+        position: fixed;
+        top: 75%;
+        left: 93%;
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,850 @@
+.body-total {
+    // height: 500px;
+    background-image: url("https://images.fpt.shop/unsafe/fit-in/filters:quality(95):fill(transparent)/fptshop.com.vn/Uploads/Originals/2023/5/31/638211284872012051_desk-header-bg.png");
+    background-color: rgb(249, 30, 0);
+    background-repeat: no-repeat;
+    // background-size: cover;
+}
+
+.body-small {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    .sale-img {
+        margin: 16px 0;
+        max-height: 208px;
+
+        img {
+            max-width: 1176px;
+        }
+    }
+
+    .slide-show {
+        display: flex;
+        width: 1200px;
+        height: 360px;
+        margin-bottom: 24px;
+        padding: 5px 5px 0px 5px;
+        background-color: #fff;
+        border-radius: 5px;
+
+        .box-right {
+            padding: 0px 5px 5px 5px;
+
+            // border-radius: ;
+            .promotion-information {
+                .slide-information {
+                    display: flex;
+                    padding-top: 10px;
+
+                    img {
+                        margin-right: 10px;
+                        border-radius: 5px;
+                    }
+
+                    p {
+                        font-size: 15px;
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+    }
+
+    .sale-option {
+        width: 1200px;
+        height: 320px;
+        background-color: #fff;
+        display: flex;
+        flex-wrap: wrap;
+        border-radius: 6px;
+        // box-sizing: border-box;
+        padding: 2px;
+        cursor: pointer;
+
+        .sale-option-box {
+            width: 16.6667%;
+            height: 50%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            border: 1px solid #f2f2f2;
+            padding: 15px;
+
+            &:hover {
+                border-color: rgba(0, 0, 0, .12);
+                -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, .15);
+                box-shadow: 0 0 10px 0 rgba(0, 0, 0, .15);
+            }
+
+            .box-wrap {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 95px;
+                height: 95px;
+                border-radius: 50%;
+                background-color: #f4f4f4;
+                margin-bottom: 10px;
+
+            }
+
+            p {
+                margin: 0px;
+            }
+        }
+    }
+
+    .gold-time {
+        position: relative;
+        width: 1200px;
+        height: 555px;
+        background-color: #fff;
+        margin: 52px 0px 24px 0px;
+        border-radius: 6px;
+
+        .gold-time-upper {
+            display: flex;
+            position: absolute;
+            align-items: center;
+            background: linear-gradient(213.94deg, #f0ebae 16.68%, #dfb45c 40.45%, #fee8a0 66.83%);
+            border-radius: 180px;
+            width: auto;
+            padding: 12px 32px 8px;
+            top: -28px;
+            left: 28.4%;
+
+            h2 {
+                font-size: 36px;
+                color: #cb1c22;
+                margin: 0px 24px 0px 0px;
+            }
+
+            .jamb {
+                position: relative;
+                right: 12px;
+                top: -1px;
+                border-left: 2px solid #32373d;
+                height: 32px;
+            }
+
+            a {
+                font-size: 20px;
+                font-weight: 500;
+                text-decoration: none;
+                color: #0664f9;
+            }
+        }
+
+        .gold-time-bottom {
+            .row {
+                display: flex;
+                justify-content: space-between;
+                height: 127px;
+
+                .row-children {
+                    display: flex;
+                    align-items: center;
+                    flex-direction: column;
+                    width: 25%;
+                    padding: 54px 0px 17px;
+                    background-color: #444b52;
+                    border-right: 1px solid #6a737a;
+
+                    &:first-child {
+                        border-top-left-radius: 5px;
+                    }
+
+                    &:last-child {
+                        border-top-right-radius: 5px;
+                        border-right: none;
+                    }
+
+                    .row-children2 {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin-bottom: 8px;
+
+                        p {
+                            font-weight: 500;
+                            font-size: 24px;
+                            color: #fff;
+                        }
+
+                        .countdown-time {
+                            width: 125px;
+                            border-radius: 15px;
+                            margin-left: 8px;
+                            padding: 4px 8px;
+                            background-color: #fff;
+                            color: #32373d;
+                            font-size: 18px;
+                            font-weight: 500;
+                        }
+                    }
+
+                    p {
+                        margin: 0;
+                        color: #fff;
+                    }
+
+                }
+
+
+            }
+
+            .product {
+                flex-wrap: nowrap;
+
+                .product-box {
+                    width: 300px;
+                }
+            }
+
+        }
+    }
+
+    .active3 {
+        background-color: #cb1c22 !important;
+        color: #fff !important;
+    }
+
+    .product {
+        display: flex;
+        height: auto;
+        flex-wrap: wrap;
+        padding-bottom: 20px;
+        cursor: pointer;
+
+
+        .product-box {
+            padding: 12px;
+            width: 25%;
+            height: 100%;
+            position: relative;
+
+            &:hover {
+                .product-box-up {
+
+                    transform: translateY(-5px);
+                }
+
+            }
+
+            &:hover::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                height: 100%;
+                // background-color: #fff;
+                border-radius: 6px;
+                border: solid 2px #dee2e6;
+                box-shadow: 0 0 2px 0 #dee2e6;
+                transition: all .1s;
+                // background-color: #fff;
+
+            }
+
+            .product-box-up2 {
+                //  position: relative;
+
+                .product-box-up {
+                    position: relative;
+                    height: 214px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-image: url('https://fptshop.com.vn/Content/v5d/sale-special/images/product-border.png');
+                    background-repeat: no-repeat;
+
+
+
+                    // &:hover {
+
+                    //     content: "";
+                    //     // position: absolute;
+                    //     top: -9px;
+                    //     right: 0;
+                    //     bottom: 0;
+                    //     left: 0;
+                    //     // height: calc(100% + 46px);
+                    //     background: #fff;
+                    //     border-radius: 6px;
+                    //     border: solid 1px #dee2e6;
+                    //     -webkit-box-shadow: 0 0 2px 0 #dee2e6;
+                    //     box-shadow: 0 0 2px 0 #dee2e6;
+                    //     -webkit-transition: all .1s;
+                    //     -o-transition: all .1s;
+                    //     transition: all .1s;
+                    //     background-size: cover;
+                    //     background-position: center;
+                    //     background-image: url('https://fptshop.com.vn/Content/v5d/sale-special/images/product-border.png');
+                    //     background-repeat: no-repeat;
+                    // }
+
+                    img {
+                        width: 148px;
+                    }
+                }
+            }
+
+            //  sản phẩm 
+            .product-box-bottom {
+                h3 {
+                    font-weight: 700;
+                    font-size: 17px;
+                    color: #474c51;
+                    margin: 10px;
+                    position: relative;
+                    z-index: 1;
+
+                    &:hover {
+                        color: #0168fa;
+                    }
+                }
+
+                .price {
+                    font-size: 18px;
+                    line-height: 24px;
+                    font-weight: 500;
+                    color: #cb1c22;
+                    margin-right: 8px;
+                }
+
+                .old-price {
+                    font-size: 14px;
+                    line-height: 20px;
+                    color: #939ca3;
+                }
+
+                .progress-bar {
+                    position: relative;
+                    width: 275px;
+                    height: 30px;
+                    background-color: #ef8573;
+                    border-radius: 5px;
+                    overflow: hidden;
+
+                    height: 20px;
+                    background-color: #ef8573;
+                    color: white;
+                    display: flex;
+                    border-radius: 10px;
+                    margin: 8px 0px;
+                }
+
+                .sold {
+                    display: flex;
+                    position: absolute;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .price-shock {
+                    height: 34.6px;
+                    background-color: #cd1817;
+                    color: #fff;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 16px;
+                    font-weight: 700;
+
+                    &:hover {
+                        background-color: #ae1427;
+                    }
+                }
+
+                .watch-product {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-top: 10px;
+
+                    a {
+
+                        text-decoration: none;
+                        color: #32373d;
+                    }
+                }
+            }
+        }
+    }
+
+    .product2 {
+        display: flex;
+        height: auto;
+        flex-wrap: wrap;
+        padding-bottom: 20px;
+        cursor: pointer;
+
+        .product-box {
+            padding: 12px;
+            width: 25%;
+            height: 100%;
+            position: relative;
+
+            &:hover::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                height: calc(100% + 46px);
+                // background-color: #fff;
+                border-radius: 6px;
+                border: solid 2px #dee2e6;
+                -webkit-box-shadow: 0 0 2px 0 #dee2e6;
+                box-shadow: 0 0 2px 0 #dee2e6;
+                -webkit-transition: all .1s;
+                -o-transition: all .1s;
+                transition: all .1s;
+                background-color: #fff;
+            }
+
+            &:hover {
+                z-index: 1;
+
+                .btn {
+                    opacity: 1;
+                    visibility: visible;
+                }
+
+                .product-box-up {
+
+                    transform: translateY(-5px);
+                }
+            }
+
+            .product-box-up2 {
+                //  position: relative;
+
+                .product-box-up {
+                    position: relative;
+                    height: 214px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-image: url('https://fptshop.com.vn/Content/v5d/sale-special/images/product-border.png');
+                    background-repeat: no-repeat;
+                    // &:hover {
+
+                    //     content: "";
+                    //     // position: absolute;
+                    //     top: -9px;
+                    //     right: 0;
+                    //     bottom: 0;
+                    //     left: 0;
+                    //     // height: calc(100% + 46px);
+                    //     background: #fff;
+                    //     border-radius: 6px;
+                    //     border: solid 1px #dee2e6;
+                    //     -webkit-box-shadow: 0 0 2px 0 #dee2e6;
+                    //     box-shadow: 0 0 2px 0 #dee2e6;
+                    //     -webkit-transition: all .1s;
+                    //     -o-transition: all .1s;
+                    //     transition: all .1s;
+                    //     background-size: cover;
+                    //     background-position: center;
+                    //     background-image: url('https://fptshop.com.vn/Content/v5d/sale-special/images/product-border.png');
+                    //     background-repeat: no-repeat;
+                    // }
+
+                    img {
+                        width: 148px;
+                    }
+                }
+            }
+
+            //  sản phẩm 
+            .product-box-bottom {
+                a{
+                    text-decoration: none;
+                }
+                h3 {
+                    font-weight: 700;
+                    font-size: 17px;
+                    color: #474c51;
+                    margin: 10px;
+                    position: relative;
+                    z-index: 1;
+                    text-decoration: none;
+                    &:hover {
+                        color: #0168fa;
+                    }
+                }
+
+                .price {
+                    font-size: 18px;
+                    line-height: 24px;
+                    font-weight: 500;
+                    color: #cb1c22;
+                    margin-right: 8px;
+                }
+
+                .old-price {
+                    font-size: 14px;
+                    line-height: 20px;
+                    color: #939ca3;
+                }
+
+                .progress-bar {
+                    position: relative;
+                    width: 275px;
+                    height: 30px;
+                    background-color: #ef8573;
+                    border-radius: 5px;
+                    overflow: hidden;
+
+                    height: 20px;
+                    background-color: #ef8573;
+                    color: white;
+                    display: flex;
+                    border-radius: 10px;
+                    margin: 8px 0px;
+                }
+
+                .sold {
+                    display: flex;
+                    position: absolute;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .price-shock {
+                    height: 34.6px;
+                    background-color: #cd1817;
+                    color: #fff;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 16px;
+                    font-weight: 700;
+
+                    &:hover {
+                        background-color: #ae1427;
+                    }
+                }
+
+                .watch-product {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-top: 10px;
+
+                    a {
+
+                        text-decoration: none;
+                        color: #32373d;
+                    }
+                }
+            }
+        }
+    }
+
+    .discount {
+        position: absolute;
+        color: #fff;
+        background: #cb1c22;
+        left: 0;
+        top: 72%;
+        height: auto;
+        font-size: 13px;
+        border-bottom-right-radius: 3px;
+        border-top-right-radius: 3px;
+        cursor: pointer;
+        padding: 3px;
+    }
+
+    .sale-img2 {
+        margin-bottom: 24px;
+
+        img {
+            border-radius: 6px;
+        }
+    }
+
+    .hot-promotion {
+        background-color: #fff;
+        width: 1200px;
+        border-radius: 5px;
+        height: 560px;
+        overflow: hidden;
+        // white-space: nowrap;
+
+        .promotion-header {
+            display: flex;
+            padding: 0px 15px;
+            align-items: center;
+
+            i {
+                font-size: 45px;
+                margin-right: 8px;
+            }
+
+            h2 {
+                color: #cd1817;
+            }
+        }
+
+        .promotion-body {
+            .product {
+                flex-wrap: nowrap;
+
+                .product-box {
+                    width: 300px;
+                }
+            }
+
+            // display: flex;
+            .icon-img {
+                max-width: 100%;
+                border-radius: 50%;
+                margin-right: 10px;
+                border: 1px solid #d7dbde;
+            }
+        }
+    }
+
+    // banner thanks
+    .banner-thanks {
+        width: 1200px;
+        height: 668px;
+        background-image: url("https://images.fpt.shop/unsafe/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/6/1/638212398384782671_desk-html-bg%20(3).png");
+        background-size: cover;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            cursor: pointer;
+            margin: 0px 10px;
+            width: 250px;
+            height: 336px;
+        }
+    }
+
+    .list-of-products {
+        width: 1200px;
+        background-color: #fff;
+        border-radius: 5px;
+        padding-top: 15px;
+        margin-bottom: 24px;
+
+        .header-list {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px 15px;
+            margin-bottom: 15px;
+
+            h2 {
+                margin: 0;
+                font-size: 20px;
+            }
+
+            // a {
+            //     color: #0168fa;
+            //     text-decoration: none;
+            // }
+        }
+
+        .footer-product {
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding-bottom: 30px;
+
+            .param {
+                color: #a7b0b8;
+                position: relative;
+                z-index: 1;
+
+                i {
+                    margin: 5px 5px 5px 8px;
+                    font-size: 14px;
+                }
+            }
+
+        
+            .icon-img2 {
+                position: relative;
+                display: flex;
+                flex-wrap: wrap;
+
+                .logo-img {
+                    border-radius: 50%;
+                    margin: 3px;
+                    border: 1px solid #d0cfcf;
+                }
+
+                .voucher1 {
+                    display: none;
+                    position: absolute;
+                    color: #555555;
+                    font-size: 13px;
+
+                }
+
+                .voucher2 {
+                    display: none;
+                    position: absolute;
+                    color: #555555;
+                    font-size: 13px;
+                    left: 0;
+                }
+
+                p {
+                    margin: 0px;
+                }
+
+                .logo-img1 {
+                    &:hover {
+                        .voucher1 {
+                            display: block;
+                        }
+                    }
+                }
+
+                .logo-img2 {
+                    &:hover {
+
+                        // .voucher1{
+                        //     display: none;
+                        // }
+                        .voucher2 {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+
+        .btn {
+            display: flex;
+            justify-content: space-between;
+            opacity: 0;
+            visibility: hidden;
+            position: absolute;
+            bottom: -35px;
+            left: 0;
+            padding: 0 15px;
+            width: 100%;
+            -webkit-transition: all .1s;
+            -o-transition: all .1s;
+            transition: all .1s;
+            z-index: 1;
+        }
+
+        .option2 {
+            list-style: none;
+            display: flex;
+            // justify-content: space-between;
+            padding: 0px;
+            margin: 0px 15px;
+            border-radius: 5px;
+            li {
+                border: 1px solid #6a737a;
+                // border-bottom: 1px solid #6a737a;
+                // border-right: 1px double #6a737a;
+                border-radius: 5px;
+                padding: 10px 15px;
+                color: #6a737a;
+                margin-right: 10px;
+                cursor: pointer;
+                &:hover {
+                    background-color: #99a2aa;
+                    color: #fff;
+                }
+
+            }
+
+        }
+
+        .option3 {
+            display: flex;
+            justify-content: space-around;
+            padding-bottom: 15px;
+
+            .option-appliances {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                border: 1px solid #cbd1d6;
+                padding: 10px 0px;
+                width: 142px;
+                border-radius: 5px;
+                cursor: pointer;
+
+                img {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 5px;
+                }
+
+                p {
+                    margin: 0px;
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .active2 {
+            background-color: #fff6f5 !important;
+            color: #cb1c22;
+            border: 1px solid #cb1c22 !important;
+        }
+    }
+
+    .service {
+        background-color: #fff;
+        width: 1200px;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 24px;
+
+        h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .warp-service {
+            width: 274px;
+            display: flex;
+            justify-content: center;
+            padding: 12px;
+            border: 1px solid #c6f6d5;
+            background-color: #f0fff4;
+            border-radius: 5px;
+            cursor: pointer;
+
+            img {
+                height: 40px;
+                margin: 5px;
+            }
+
+            p {
+                margin: 0px;
+                font-size: 16px;
+                color: #444b52;
+                margin-top: 3px;
+            }
+        }
+    }
+}
