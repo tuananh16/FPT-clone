@@ -4,9 +4,26 @@ import { Link } from "react-router-dom";
 import { highlightsPhones } from "../../Body/body";
 import { laptopHot } from "../../Body/body";
 import { tabletHot } from "../../Body/body";
+// import OrderDetail from '../../cart/orderDetails';
 
-function BuyNow({ onHandleClose }) {
-  const [productDetail, setProductDetail] = useState("");
+export function muahang(sp) {
+  const test1 = {
+    name: sp.name,
+    price: sp.price,
+    img: sp.img,
+    oldPrice: sp.oldPrice,
+    quantity: 1
+  }
+  // const test1Array = [test1]
+  console.log(sp)
+  console.log(test1)
+
+  return test1
+}
+
+
+function BuyNow({ onHandleClose, sp }) {
+
 
   useEffect(() => {
     const path = window.location.href;
@@ -42,14 +59,53 @@ function BuyNow({ onHandleClose }) {
   const handleClose = () => {
     onHandleClose(false);
   };
-
+  const [productDetail, setProductDetail] = useState("");
+  // lấy tên và các thứ 
   const [order, setOrder] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [numberPhone, setNumberPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
+  const [note, setNote] = useState("");
 
+
+  const [isNumberPhoneValid, setIsNumberPhoneValid] = useState(true);
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setNumberPhone(value);
+
+    // Validate lại số điện thoại khi input thay đổi
+    const isValid = /^\d{10}$/.test(value); // Số điện thoại là một chuỗi 10 chữ số
+    setIsNumberPhoneValid(isValid);
+  };
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const handleInputChangeEmail = (event) => {
+    const value = event.target.value;
+    setEmail(value);
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); // Email phải có dạng example@domain.com
+    setIsEmailValid(isValid);
+  };
+
+  // click order
   const handleClickOrder = (e) => {
     e.preventDefault();
+    localStorage.setItem("fullName", fullName);
+    localStorage.setItem("numberPhone", numberPhone);
+    localStorage.setItem("address", address);
+    localStorage.setItem("email", email);
+    localStorage.setItem("note", note);
+
+    if (!isNumberPhoneValid) {
+      alert("Số điện thoại không hợp lệ!");
+      return;
+    }
+    if (!isEmailValid) {
+      alert("Email không hợp lệ!");
+      return;
+    }
     setOrder(true);
   };
-  const calculatedPrice = productDetail.price - 1900000;
 
   return (
     <div className="wrap-all2 ">
@@ -63,7 +119,7 @@ function BuyNow({ onHandleClose }) {
             <div className="body-buy">
               <div className="product-cart">
                 <div className="product-cart-img">
-                  <img src="https://fptshop.com.vn/Uploads/Originals/2023/2/20/638125128408536178_xiaomi-13-lite-den-1.jpg" />
+                  <img src={productDetail.img} />
                 </div>
                 <div className="product-cart-info">
                   <div className="product-cart-inside">
@@ -175,7 +231,7 @@ function BuyNow({ onHandleClose }) {
                 <b>Mã giảm giá</b>
                 <div>
                   <input type="text" placeholder="Nhập mã giảm giá" />
-                  <button>Áp dụng</button>
+                  <button className="cartBtn">Áp dụng</button>
                 </div>
               </div>
               <div className="pay-product">
@@ -183,7 +239,7 @@ function BuyNow({ onHandleClose }) {
                   <p>tổng tiền:</p>
                   <p>
                     {new Intl.NumberFormat("vi-VN").format(
-                      productDetail.price * quantity
+                      productDetail.oldPrice * quantity
                     )}{" "}
                     đ
                   </p>
@@ -201,7 +257,7 @@ function BuyNow({ onHandleClose }) {
                   <b>Cần thanh toán:</b>
                   <span>
                     {new Intl.NumberFormat("vi-VN").format(
-                      productDetail.oldPrice * quantity
+                      productDetail.price * quantity
                     )}{" "}
                     đ
                   </span>
@@ -223,7 +279,7 @@ function BuyNow({ onHandleClose }) {
                       <b>101.490 ₫</b>
                       <span>199.000 ₫</span>
                     </div>
-                    <button>Thêm vào giỏ hàng</button>
+                    <button className="cartBtn">Thêm vào giỏ hàng</button>
                   </div>
                 </div>
                 <div className="box-produc-child">
@@ -239,7 +295,7 @@ function BuyNow({ onHandleClose }) {
                       <b>539.100 ₫</b>
                       <span>599.000 ₫</span>
                     </div>
-                    <button>Thêm vào giỏ hàng</button>
+                    <button className="cartBtn">Thêm vào giỏ hàng</button>
                   </div>
                 </div>
                 <div className="box-produc-child">
@@ -252,7 +308,7 @@ function BuyNow({ onHandleClose }) {
                       <b>101.490 ₫</b>
                       <span>199.000 ₫</span>
                     </div>
-                    <button>Thêm vào giỏ hàng</button>
+                    <button className="cartBtn">Thêm vào giỏ hàng</button>
                   </div>
                 </div>
               </div>
@@ -261,18 +317,36 @@ function BuyNow({ onHandleClose }) {
               <h3>Thông tin khách hàng</h3>
               <div className="information">
                 <div>
-                  <input type="text" placeholder="Nhập họ và tên" required />
+                  <input
+                    type="text"
+                    placeholder="Nhập họ và tên"
+                    onChange={(event) => setFullName(event.target.value)}
+                    required
+                  />
                   <input
                     type="text"
                     placeholder="Nhập số điện thoại"
+                    onChange={handleInputChange}
                     required
                   />
+                  {!isNumberPhoneValid && (
+                  <span style={{ color: "red" }}>
+                    Số điện thoại không hợp lệ!
+                  </span>
+                )}
                 </div>
                 <input
                   style={{ width: "380px" }}
                   type="text"
+                  onChange={handleInputChangeEmail}
                   placeholder="Nhập email (không bắt buộc)"
+                  required
                 />
+                {!isEmailValid && (
+                  <span style={{ color: "red" }}>
+                    Email không hợp lệ!
+                  </span>
+                )}
               </div>
               <h3>Chọn hình thức nhận hàng</h3>
               <div className="delivery-method">
@@ -342,7 +416,12 @@ function BuyNow({ onHandleClose }) {
                     <option>Phường Vĩnh Phúc</option>
                   </select>
                 </div>
-                <input type="text" placeholder="Nhập địa chỉ" required />
+                <input
+                  type="text"
+                  placeholder="Nhập địa chỉ"
+                  onChange={(event) => setAddress(event.target.value)}
+                  required
+                />
               </div>
               <div className="receive">
                 <b>Thời gian giao hàng:</b>
@@ -359,6 +438,7 @@ function BuyNow({ onHandleClose }) {
                 }}
                 type="text"
                 placeholder="Ghi chú"
+                onChange={(event) => setNote(event.target.value)}
               />
               <div className="service">
                 <p>Chọn thêm các dịch vụ/yêu cầu</p>
@@ -411,7 +491,12 @@ function BuyNow({ onHandleClose }) {
                 </li>
               </ul>
               <div className="complete">
-                <button type="submit" value="Hoàn tất đặt hàng">
+                <button
+                  className="cartBtn"
+                  type="submit"
+                  value="Hoàn tất đặt hàng"
+                  onClick={() => muahang(productDetail)}
+                >
                   HOÀN TẤT ĐẶT HÀNG
                 </button>
                 <p>
@@ -426,9 +511,20 @@ function BuyNow({ onHandleClose }) {
                   <div className="success">
                     <i className="fa-solid fa-check fa-beat-fade" />
                     <h3>Đặt hàng thành công</h3>
-                    <Link to="/trang-chu">
-                      <button>Tiếp tục mua sắm</button>
-                    </Link>
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Link to="/trang-chu">
+                        <button className="cartBtn">Tiếp tục mua sắm</button>
+                      </Link>
+                      <Link to="/chi-tiet">
+                        <button className="cartBtn">Chi tiết đơn hàng</button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>

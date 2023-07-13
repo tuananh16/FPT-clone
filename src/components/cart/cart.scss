@@ -495,4 +495,17 @@
             }
         }
     }
+    .keep-shopping{
+        padding: 15px 23px;
+        background-color: #cb1c22;
+        border: 1px solid #cbd1d6;
+        border-radius: 5px;
+        color: #edeeef;
+        font-size: 20px;
+        margin-bottom: 16px;
+        cursor: pointer;
+    }
+    .cartBtn:active {
+        transform: scale(0.96);
+      }
 }

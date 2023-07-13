@@ -432,7 +432,7 @@ function HeaderDetail() {
                                 {e.oldPrice}
                               </span>
                             </div>
-                            <button>Thêm vào giỏ hàng</button>
+                            <button className="cartBtn">Thêm vào giỏ hàng</button>
                           </div>
                         </div>
                       </div>
@@ -470,7 +470,7 @@ function HeaderDetail() {
                                   {e.oldPrice}
                                 </span>
                               </div>
-                              <button>Thêm vào giỏ hàng</button>
+                              <button className="cartBtn">Thêm vào giỏ hàng</button>
                             </div>
                             <div
                               style={{
@@ -494,7 +494,7 @@ function HeaderDetail() {
                   </div>
                 </div>
                 <div className="total">
-                  <button>Mua thêm 3 sản phẩm</button>
+                  <button className="cartBtn">Mua thêm 3 sản phẩm</button>
                   <p>
                     Tiết kiệm : <span>421.400₫</span>{" "}
                   </p>

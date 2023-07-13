@@ -6,9 +6,7 @@ import Example from "../slideShow/slideShow";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 import { Link } from "react-router-dom";
-import Header from "../../common/HeaderComponent/header";
 
-// test
 export const highlightsPhones = [
   {
     id: 1,
@@ -254,14 +252,24 @@ export const tabletHot = [
   },
 ];
 
-function Body({onChangeAmount}) {
-  const [amount, setAmount] = useState(0);
+function Body({ 
+  cart, onChangeCart }) {
 
-  const handleMore = () => {
-    setAmount(amount + 1);
-    onChangeAmount(amount)
-    console.log()
+  const handleClickAdd = (item) => {
+    let newCart = [...cart];
+    const index = newCart.findIndex(
+      (x) => x.id === item.id && x.name === item.name
+    );
+    if (index === -1) {
+      item.quantity = 1;
+      newCart.push(item);
+    } else {
+      ++newCart[index].quantity;
+    }
+    onChangeCart(newCart);
   };
+  
+
 
   const saleOption = [
     {
@@ -801,7 +809,6 @@ function Body({onChangeAmount}) {
   );
 
   const handleMouseEnter = (newCaption) => {
-    // console.log("mouse enter");
     setCaption(newCaption);
   };
 
@@ -1495,7 +1502,6 @@ function Body({onChangeAmount}) {
     setActiveMang(6);
   };
   return (
-    
     <div className="body-total">
       {/* test ================================================================================= */}
       {/* <Header test ={ amount} /> */}
@@ -2166,7 +2172,7 @@ function Body({onChangeAmount}) {
                   </div>
                   <div className="btn">
                     <Link to={`/dien-thoai/${product.id}`}>
-                      <button
+                      <button className="cartBtn" 
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -2183,7 +2189,7 @@ function Body({onChangeAmount}) {
                         MUA NGAY
                       </button>
                     </Link>
-                    <button
+                    <button className="cartBtn"
                       style={{
                         fontSize: "16px",
                         fontWeight: "500",
@@ -2196,7 +2202,9 @@ function Body({onChangeAmount}) {
                         border: "none",
                         cursor: "pointer",
                       }}
-                      onClick={handleMore}
+                      onClick={() => {
+                handleClickAdd(product);
+              }}
                     >
                       THÊM VÀO GIỎ HÀNG
                     </button>
@@ -2337,7 +2345,7 @@ function Body({onChangeAmount}) {
                   </div>
                   <div className="btn">
                     <Link to={`/Laptop/${product.id}`}>
-                      <button
+                      <button className="cartBtn" 
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -2354,7 +2362,7 @@ function Body({onChangeAmount}) {
                         MUA NGAY
                       </button>
                     </Link>
-                    <button
+                    <button className="cartBtn"
                       style={{
                         fontSize: "16px",
                         fontWeight: "500",
@@ -2366,7 +2374,9 @@ function Body({onChangeAmount}) {
                         border: "none",
                         cursor: "pointer",
                       }}
-                      onClick={handleMore}
+                      onClick={() => {
+                handleClickAdd(product);
+              }}
                     >
                       THÊM VÀO GIỎ HÀNG
                     </button>
@@ -2504,7 +2514,7 @@ function Body({onChangeAmount}) {
                   <div className="btn">
                     <Link to={`/Tablet/${product.id}`}>
                       {" "}
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -2521,7 +2531,7 @@ function Body({onChangeAmount}) {
                         MUA NGAY
                       </button>
                     </Link>
-                    <button
+                    <button className="cartBtn"
                       style={{
                         fontSize: "16px",
                         fontWeight: "500",
@@ -2534,7 +2544,9 @@ function Body({onChangeAmount}) {
                         border: "none",
                         cursor: "pointer",
                       }}
-                      onClick={handleMore}
+                      onClick={() => {
+                handleClickAdd(product);
+              }}
                     >
                       THÊM VÀO GIỎ HÀNG
                     </button>
@@ -2712,7 +2724,7 @@ function Body({onChangeAmount}) {
                       </div>
                     </div>
                     <div className="btn">
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -2728,7 +2740,7 @@ function Body({onChangeAmount}) {
                       >
                         MUA NGAY
                       </button>
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -2741,7 +2753,9 @@ function Body({onChangeAmount}) {
                           border: "none",
                           cursor: "pointer",
                         }}
-                        onClick={handleMore}
+                        onClick={() => {
+                handleClickAdd(product);
+              }}
                       >
                         THÊM VÀO GIỎ HÀNG
                       </button>
@@ -2858,7 +2872,7 @@ function Body({onChangeAmount}) {
                       </div>
                     </div>
                     <div className="btn">
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -2874,7 +2888,7 @@ function Body({onChangeAmount}) {
                       >
                         MUA NGAY
                       </button>
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -2887,7 +2901,9 @@ function Body({onChangeAmount}) {
                           border: "none",
                           cursor: "pointer",
                         }}
-                        onClick={handleMore}
+                        onClick={() => {
+                handleClickAdd(product);
+              }}
                       >
                         THÊM VÀO GIỎ HÀNG
                       </button>
@@ -3004,7 +3020,7 @@ function Body({onChangeAmount}) {
                       </div>
                     </div>
                     <div className="btn">
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -3020,7 +3036,7 @@ function Body({onChangeAmount}) {
                       >
                         MUA NGAY
                       </button>
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -3033,7 +3049,9 @@ function Body({onChangeAmount}) {
                           border: "none",
                           cursor: "pointer",
                         }}
-                        onClick={handleMore}
+                        onClick={() => {
+                handleClickAdd(product);
+              }}
                       >
                         THÊM VÀO GIỎ HÀNG
                       </button>
@@ -3140,7 +3158,7 @@ function Body({onChangeAmount}) {
                       </div>
                     </div>
                     <div className="btn">
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -3156,7 +3174,7 @@ function Body({onChangeAmount}) {
                       >
                         MUA NGAY
                       </button>
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -3169,7 +3187,9 @@ function Body({onChangeAmount}) {
                           border: "none",
                           cursor: "pointer",
                         }}
-                        onClick={handleMore}
+                        onClick={() => {
+                handleClickAdd(product);
+              }}
                       >
                         THÊM VÀO GIỎ HÀNG
                       </button>
@@ -3286,7 +3306,7 @@ function Body({onChangeAmount}) {
                       </div>
                     </div>
                     <div className="btn">
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -3302,7 +3322,7 @@ function Body({onChangeAmount}) {
                       >
                         MUA NGAY
                       </button>
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -3315,7 +3335,9 @@ function Body({onChangeAmount}) {
                           border: "none",
                           cursor: "pointer",
                         }}
-                        onClick={handleMore}
+                        onClick={() => {
+                handleClickAdd(product);
+              }}
                       >
                         THÊM VÀO GIỎ HÀNG
                       </button>
@@ -3432,7 +3454,7 @@ function Body({onChangeAmount}) {
                       </div>
                     </div>
                     <div className="btn">
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -3448,7 +3470,7 @@ function Body({onChangeAmount}) {
                       >
                         MUA NGAY
                       </button>
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -3461,7 +3483,9 @@ function Body({onChangeAmount}) {
                           border: "none",
                           cursor: "pointer",
                         }}
-                        onClick={handleMore}
+                        onClick={() => {
+                handleClickAdd(product);
+              }}
                       >
                         THÊM VÀO GIỎ HÀNG
                       </button>
@@ -3578,7 +3602,7 @@ function Body({onChangeAmount}) {
                       </div>
                     </div>
                     <div className="btn">
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -3594,7 +3618,7 @@ function Body({onChangeAmount}) {
                       >
                         MUA NGAY
                       </button>
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -3607,7 +3631,9 @@ function Body({onChangeAmount}) {
                           border: "none",
                           cursor: "pointer",
                         }}
-                        onClick={handleMore}
+                        onClick={() => {
+                handleClickAdd(product);
+              }}
                       >
                         THÊM VÀO GIỎ HÀNG
                       </button>
@@ -3785,7 +3811,7 @@ function Body({onChangeAmount}) {
                       </div>
                     </div>
                     <div className="btn">
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -3801,7 +3827,7 @@ function Body({onChangeAmount}) {
                       >
                         MUA NGAY
                       </button>
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -3814,7 +3840,9 @@ function Body({onChangeAmount}) {
                           border: "none",
                           cursor: "pointer",
                         }}
-                        onClick={handleMore}
+                        onClick={() => {
+                handleClickAdd(product);
+              }}
                       >
                         THÊM VÀO GIỎ HÀNG
                       </button>
@@ -3929,7 +3957,7 @@ function Body({onChangeAmount}) {
                       </div>
                     </div>
                     <div className="btn">
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -3945,7 +3973,7 @@ function Body({onChangeAmount}) {
                       >
                         MUA NGAY
                       </button>
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -3958,7 +3986,9 @@ function Body({onChangeAmount}) {
                           border: "none",
                           cursor: "pointer",
                         }}
-                        onClick={handleMore}
+                        onClick={() => {
+                handleClickAdd(product);
+              }}
                       >
                         THÊM VÀO GIỎ HÀNG
                       </button>
@@ -4073,7 +4103,7 @@ function Body({onChangeAmount}) {
                       </div>
                     </div>
                     <div className="btn">
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -4089,7 +4119,7 @@ function Body({onChangeAmount}) {
                       >
                         MUA NGAY
                       </button>
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -4102,7 +4132,9 @@ function Body({onChangeAmount}) {
                           border: "none",
                           cursor: "pointer",
                         }}
-                        onClick={handleMore}
+                        onClick={() => {
+                handleClickAdd(product);
+              }}
                       >
                         THÊM VÀO GIỎ HÀNG
                       </button>
@@ -4217,7 +4249,7 @@ function Body({onChangeAmount}) {
                       </div>
                     </div>
                     <div className="btn">
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -4233,7 +4265,7 @@ function Body({onChangeAmount}) {
                       >
                         MUA NGAY
                       </button>
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -4246,7 +4278,9 @@ function Body({onChangeAmount}) {
                           border: "none",
                           cursor: "pointer",
                         }}
-                        onClick={handleMore}
+                        onClick={() => {
+                handleClickAdd(product);
+              }}
                       >
                         THÊM VÀO GIỎ HÀNG
                       </button>
@@ -4361,7 +4395,7 @@ function Body({onChangeAmount}) {
                       </div>
                     </div>
                     <div className="btn">
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -4377,7 +4411,7 @@ function Body({onChangeAmount}) {
                       >
                         MUA NGAY
                       </button>
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -4390,7 +4424,9 @@ function Body({onChangeAmount}) {
                           border: "none",
                           cursor: "pointer",
                         }}
-                        onClick={handleMore}
+                        onClick={() => {
+                handleClickAdd(product);
+              }}
                       >
                         THÊM VÀO GIỎ HÀNG
                       </button>
@@ -4505,7 +4541,7 @@ function Body({onChangeAmount}) {
                       </div>
                     </div>
                     <div className="btn">
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -4520,7 +4556,7 @@ function Body({onChangeAmount}) {
                       >
                         MUA NGAY
                       </button>
-                      <button
+                      <button className="cartBtn"
                         style={{
                           fontSize: "16px",
                           fontWeight: "500",
@@ -4532,7 +4568,9 @@ function Body({onChangeAmount}) {
                           border: "none",
                           cursor: "pointer",
                         }}
-                        onClick={handleMore}
+                        onClick={() => {
+                handleClickAdd(product);
+              }}
                       >
                         THÊM VÀO GIỎ HÀNG
                       </button>

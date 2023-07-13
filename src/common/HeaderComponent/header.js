@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 // khôi phục tiếp
 //  khôi phục
 // list-option
-function Header(props) {
+function Header({cart}) {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleMouseEnter = () => {
@@ -13,16 +13,6 @@ function Header(props) {
   const handleMouseLeave = () => {
     setIsVisible(false);
   };
-
-  //   block 1
-  // const [isHover, setIsHover] = useState(false); //false
-
-  // const handleMouseEnter2 = () => {
-  //   setIsHover(true); //true
-  // };
-  // const handleMouseLeave2 = () => {
-  //   setIsHover(false); //false
-  // };
 
   // hover thẻ li các kiểu
   const [hoveredCategory, setHoveredCategory] = useState(null);
@@ -368,7 +358,7 @@ function Header(props) {
                       fontSize: "10px",
                     }}
                   >
-                    {props.TotalAmout}
+                    {cart.length}
                   </div>
                   <i className="fa-solid fa-cart-shopping"></i>
                   <span>Giỏ hàng</span>
