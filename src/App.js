@@ -26,6 +26,17 @@ function App() {
     setIsPurchased(true);
   };
 
+  const handleBuySuccess= (newItem) =>{
+    const newPurchasedItems = [...purchasedItems]
+    const index = newPurchasedItems.findIndex(item => item.name === newItem.name)
+    if (index !== -1) {
+      ++newPurchasedItems[index].quantity
+    } else {
+      newPurchasedItems.push(newItem)
+    }
+    setPurchasedItems(newPurchasedItems)
+  }
+
   return (
     <div className="App">
       <Header cart={cart} />
@@ -36,9 +47,9 @@ function App() {
           element={<Body cart={cart} onChangeCart={setCart} />}
         />
         <Route path="/" element={<Body />} />
-        <Route path="/dien-thoai/:id" element={<BodyDetail />} />
-        <Route path="/Laptop/:id" element={<BodyDetail />} />
-        <Route path="/Tablet/:id" element={<BodyDetail />} />
+        <Route path="/dien-thoai/:id" element={<BodyDetail handleBuySuccess={handleBuySuccess}/>} />
+        <Route path="/Laptop/:id" element={<BodyDetail  handleBuySuccess={handleBuySuccess}/>} />
+        <Route path="/Tablet/:id" element={<BodyDetail  handleBuySuccess={handleBuySuccess}/>} />
         <Route
           path="/cart"
           element={
@@ -51,7 +62,7 @@ function App() {
         />
 
         <Route path="/chi-tiet" element={<OrderDetails cart={purchasedItems} />} />
-        
+
       </Routes>
 
       <Footer />

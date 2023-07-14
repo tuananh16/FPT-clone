@@ -251,7 +251,6 @@ function Header({cart}) {
 
   const handleClick = () => {
     setShow(true);
-    console.log(".....");
   };
 
   useEffect(() => {

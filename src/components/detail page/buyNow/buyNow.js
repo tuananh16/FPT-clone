@@ -15,14 +15,12 @@ export function muahang(sp) {
     quantity: 1
   }
   // const test1Array = [test1]
-  console.log(sp)
-  console.log(test1)
 
   return test1
 }
 
 
-function BuyNow({ onHandleClose, sp }) {
+function BuyNow({ onHandleClose, onHandleBuySuccess, sp }) {
 
 
   useEffect(() => {
@@ -59,8 +57,13 @@ function BuyNow({ onHandleClose, sp }) {
   const handleClose = () => {
     onHandleClose(false);
   };
+
+  const handleBuySuccess = (productDetail) => {
+    const itemBought = muahang(productDetail)
+    onHandleBuySuccess(itemBought)
+  };
   const [productDetail, setProductDetail] = useState("");
-  // lấy tên và các thứ 
+  // lấy tên và các thứ
   const [order, setOrder] = useState(false);
   const [fullName, setFullName] = useState("");
   const [numberPhone, setNumberPhone] = useState("");
@@ -495,7 +498,7 @@ function BuyNow({ onHandleClose, sp }) {
                   className="cartBtn"
                   type="submit"
                   value="Hoàn tất đặt hàng"
-                  onClick={() => muahang(productDetail)}
+                  onClick={() => handleBuySuccess(productDetail)}
                 >
                   HOÀN TẤT ĐẶT HÀNG
                 </button>

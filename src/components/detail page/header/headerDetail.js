@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import SlideShowDetail from "./slideShowDetail";
 import BuyNow from "../buyNow/buyNow";
 
-function HeaderDetail() {
+function HeaderDetail({onHandleBuySuccess}) {
   const suggestBundled = [
     {
       id: 1,
@@ -72,6 +72,10 @@ function HeaderDetail() {
   };
   const handleClickoff = (e) => {
     setBuyNow(e);
+  };
+
+  const handleBuySuccess = (item) => {
+    onHandleBuySuccess(item)
   };
 
   const [productDetail, setProductDetail] = useState("");
@@ -367,7 +371,7 @@ function HeaderDetail() {
                     <strong>Mua ngay</strong>
                     <p>Giao hàng miễn phí hoặc nhận tại shop</p>
                   </div>
-                  {buyNow && <BuyNow onHandleClose={handleClickoff} />}
+                  {buyNow && <BuyNow onHandleClose={handleClickoff} onHandleBuySuccess={handleBuySuccess}/>}
                   <div className="contributions">
                     <div className="contributions1">
                       <strong>Trả góp 0%</strong>

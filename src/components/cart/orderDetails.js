@@ -9,7 +9,6 @@ function OrderDetails({ cart,props }) {
   const product = { /* object with product info */ }
 
 const result = muahang(product)
-console.log(result)
   // const { test1Array } = props.location.state;
   // console.log(cart);
   // function test() {
@@ -21,7 +20,7 @@ console.log(result)
   //     orderDetails = cart.concat(purchasedProduct)
   //   }
   //   console.log(orderDetails);
-    
+
   //   return orderDetails;
   // }
 
