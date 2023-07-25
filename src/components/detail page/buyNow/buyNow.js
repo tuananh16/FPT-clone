@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import "./buyNow.scss";
 import { Link } from "react-router-dom";
-import { highlightsPhones } from "../../Body/body";
-import { laptopHot } from "../../Body/body";
-import { tabletHot } from "../../Body/body";
+import { highlightsPhones,laptopHot, tabletHot } from "../../Body/data";
 // import OrderDetail from '../../cart/orderDetails';
 
 export function muahang(sp) {

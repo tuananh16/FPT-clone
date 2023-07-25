@@ -1,10 +1,7 @@
 import "./bodyWrap.scss";
 import { useState } from "react";
-import { highlightsPhones } from "../../Body/body";
-import { laptopHot } from "../../Body/body";
-import { tabletHot } from "../../Body/body";
+import { highlightsPhones, laptopHot, tabletHot } from "../../Body/data";
 import SlideShowDetail from "../header/slideShowDetail";
-
 
 function BodyWrap() {
   const [showContent, setShowContent] = useState(false);
@@ -15,18 +12,23 @@ function BodyWrap() {
       <div className="dt-container">
         <div className="box-left">
           <h2>Đặc điểm nổi bật của </h2>
-          <div className={`body-left ${showContent ? "show" : ""}`} style={{ height: styleHeight }}>
-            <div className="slider"><SlideShowDetail/></div>
+          <div
+            className={`body-left ${showContent ? "show" : ""}`}
+            style={{ height: styleHeight }}
+          >
+            <div className="slider">
+              <SlideShowDetail />
+            </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <h2>Đánh giá chi tiết {highlightsPhones[0].name}</h2>
             </div>
-            <div className="box-content"  >
+            <div className="box-content">
               <b>
-                <a href="/">{highlightsPhones[0].name}</a> đem đến những trải nghiệm
-                không thể tìm thấy trên mọi thế hệ iPhone trước đó với màu Tím
-                Deep Purple sang trọng, camera 48MP lần đầu xuất hiện, chip A16
-                Bionic và màn hình “viên thuốc” Dynamic Island linh hoạt, nịnh
-                mắt.
+                <a href="/">{highlightsPhones[0].name}</a> đem đến những trải
+                nghiệm không thể tìm thấy trên mọi thế hệ iPhone trước đó với
+                màu Tím Deep Purple sang trọng, camera 48MP lần đầu xuất hiện,
+                chip A16 Bionic và màn hình “viên thuốc” Dynamic Island linh
+                hoạt, nịnh mắt.
               </b>
               <img
                 style={{ maxWidth: "665px", marginTop: "5px" }}
@@ -72,7 +74,7 @@ function BodyWrap() {
             {!showContent && (
               <button
                 onClick={() => {
-                  setShowContent(true)
+                  setShowContent(true);
                   setStyleHeight("auto");
                 }}
               >

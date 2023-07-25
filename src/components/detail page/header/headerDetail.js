@@ -1,7 +1,5 @@
 import "./headerDetail.scss";
-import { highlightsPhones } from "../../Body/body";
-import { laptopHot } from "../../Body/body";
-import { tabletHot } from "../../Body/body";
+import { highlightsPhones, laptopHot,tabletHot} from "../../Body/data";
 import { useEffect, useState } from "react";
 import SlideShowDetail from "./slideShowDetail";
 import BuyNow from "../buyNow/buyNow";
