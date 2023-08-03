@@ -21,8 +21,6 @@ export function muahang(sp) {
 
 
 function BuyNow({ onHandleClose, sp }) {
-
-
   useEffect(() => {
     const path = window.location.href;
     let arrDevice = null;

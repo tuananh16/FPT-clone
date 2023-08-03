@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./header.scss";
 import { Link } from "react-router-dom";
+import Login from "./login";
 // khôi phục tiếp
 //  khôi phục
 // list-option
@@ -247,27 +248,31 @@ function Header({cart}) {
   ];
   // ẩn hiện ô search
   const [show, setShow] = useState(false);
-  const search = useRef(null);
+ 
 
   const handleClick = () => {
     setShow(true);
-    console.log(".....");
   };
-
+  const search = useRef(null);
   useEffect(() => {
     const handleOutSideClick = (event) => {
       if (search.current && !search.current.contains(event.target)) {
         setShow(false);
       }
     };
-
     document.addEventListener("mousedown", handleOutSideClick);
-
     return () => {
       document.removeEventListener("mousedown", handleOutSideClick);
     };
   }, []);
-
+  // login =================================
+  const [login, setLogin] = useState(false)
+  const clickLogin = () => {
+    setLogin(true)
+  }
+  const handleClickoff= (e) => {
+    setLogin(e);
+  };
   return (
     <div>
       {/* header 1 */}
@@ -335,12 +340,14 @@ function Header({cart}) {
                   <span>Thanh toán & tiện ích</span>
                 </a>
               </li>
-              <li>
+              <li onClick={clickLogin}  >
                 <a>
                   <i className="fa-solid fa-circle-user"></i>
-                  <span>Tài khoản của tôi</span>
+                  <span  >Tài khoản của tôi</span>
                 </a>
               </li>
+              {login  && <Login handleClickoff ={handleClickoff}/>  }
+
               <li>
                 <Link to="/cart" style={{textDecoration:"none"}}>
                   <div

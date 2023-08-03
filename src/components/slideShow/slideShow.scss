@@ -1,34 +1,48 @@
 .wrap-img {
+    z-index: 1;
     width: 800px;
-    height:355px;
+    height: 355px;
     background-color: #fff;
-    img{
+
+    img {
         height: 300px;
         width: 800px;
     }
 }
+.nav{
+    .default-nav{
+        z-index: 1;
+    }
+} 
 .wrap-button {
     display: flex;
     overflow: hidden;
-    button{
+
+    button {
         cursor: pointer;
         width: 160px;
         height: 49px;
-        border: none; 
+        border: none;
         font-size: 14px;
-        font-weight: 300; 
+        font-weight: 300;
         background-color: #fff;
-        &:hover{
-            border-bottom: 2px solid #cd1817 ;
+        // z-index: 1;
+
+        &:hover {
+            border-bottom: 2px solid #cd1817;
             color: #000;
             font-weight: 700;
         }
     }
-    .active2{
-        border-bottom: 3px solid #cd1817 ;
+
+    .active2 {
+        border-bottom: 3px solid #cd1817;
         color: #000;
+
         button {
             font-weight: 700;
         }
     }
+
+   
 }
