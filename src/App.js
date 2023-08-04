@@ -7,6 +7,7 @@ import BodyDetail from "./components/detail page/bodyDetail";
 import Cart from "./components/cart/cart";
 import OrderDetails from "./components/cart/orderDetails";
 import { useState } from "react";
+import Index from "./admin";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -28,8 +29,8 @@ function App() {
 
   return (
     <div className="App">
+      {/* <Index  /> */}
       <Header cart={cart} />
-
       <Routes>
         <Route
           path="/trang-chu"
@@ -49,9 +50,10 @@ function App() {
             />
           }
         />
-
-        <Route path="/chi-tiet" element={<OrderDetails cart={purchasedItems} />} />
-        
+        <Route
+          path="/chi-tiet"
+          element={<OrderDetails cart={purchasedItems} />}
+        />
       </Routes>
 
       <Footer />
