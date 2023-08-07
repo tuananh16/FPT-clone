@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./style.scss";
+import { Link } from "react-router-dom";
 function Navbar() {
   const [showSubList1, setShowSubList1] = useState(false);
   const [showSubList2, setShowSubList2] = useState(false);
@@ -24,16 +25,20 @@ function Navbar() {
   };
   return (
     <div className="ad-navbar">
-      <div className="ad-navbar-logo">
-        <img src="https://media3.scdn.vn/img4/2020/05_04/kJeRRsQS1Kzg5lZunJZB.png" />
-      </div>
+      <Link to="/">
+        <div className="ad-navbar-logo">
+          <img src="https://media3.scdn.vn/img4/2020/05_04/kJeRRsQS1Kzg5lZunJZB.png" />
+        </div>
+      </Link>
       <ul>
-        <li>
-        <span>
-            <img src="https://tse3.mm.bing.net/th?id=OIP.aFUA62GXzSVCvoHZp8-wxwHaHa&pid=Api&P=0&h=180" />
-            Trang Chủ
-          </span>
-        </li>
+        <Link to="/">
+          <li>
+            <span>
+              <img src="https://tse3.mm.bing.net/th?id=OIP.aFUA62GXzSVCvoHZp8-wxwHaHa&pid=Api&P=0&h=180" />
+              Trang Chủ
+            </span>
+          </li>
+        </Link>
         <li onClick={handleToggleSubList1}>
           <span>
             <img src="https://cdn4.iconfinder.com/data/icons/delivery-29/128/11-512.png" />
@@ -42,15 +47,21 @@ function Navbar() {
           </span>
           {showSubList1 && (
             <ul>
-              <li onClick={(event) => event.stopPropagation()}>
-                Chưa Hoàn Thành
-              </li>
-              <li onClick={(event) => event.stopPropagation()}>
-                Đã Hoàn Thành
-              </li>
-              <li onClick={(event) => event.stopPropagation()}>
-                Tất Cả Đơn Hàng
-              </li>
+              <Link to="/chua-hoan-thanh">
+                <li onClick={(event) => event.stopPropagation()}>
+                  Chưa Hoàn Thành
+                </li>
+              </Link>
+              <Link to="/da-hoan-thanh">
+                <li onClick={(event) => event.stopPropagation()}>
+                  Đã Hoàn Thành
+                </li>
+              </Link>
+              <Link to="/all-don-hang">
+                <li onClick={(event) => event.stopPropagation()}>
+                  Tất Cả Đơn Hàng
+                </li>
+              </Link>
             </ul>
           )}
         </li>
@@ -62,8 +73,12 @@ function Navbar() {
           </span>
           {showSubList2 && (
             <ul>
-              <li>Danh Sách</li>
-              <li>Thêm</li>
+              <Link to="/loai-san-pham/danh-sach">
+                <li>Danh Sách</li>
+              </Link>
+              <Link to="/loai-san-pham/them">
+                <li>Thêm</li>
+              </Link>
             </ul>
           )}
         </li>
@@ -75,8 +90,12 @@ function Navbar() {
           </span>
           {showSubList3 && (
             <ul>
-              <li>Danh Sách</li>
-              <li>Thêm</li>
+              <Link to="/san-pham/danh-sach">
+                <li>Danh Sách</li>
+              </Link>
+              <Link to="/san-pham/them">
+                <li>Thêm</li>
+              </Link>
             </ul>
           )}
         </li>
@@ -88,8 +107,12 @@ function Navbar() {
           </span>
           {showSubList4 && (
             <ul>
-              <li>Danh Sách</li>
-              <li>Thêm</li>
+              <Link to="/anh-san-pham/danh-sach">
+                <li>Danh Sách</li>
+              </Link>
+              <Link to="/anh-san-pham/them">
+                <li>Thêm</li>
+              </Link>
             </ul>
           )}
         </li>

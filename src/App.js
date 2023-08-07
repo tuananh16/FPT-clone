@@ -29,8 +29,9 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Index  /> */}
-      <Header cart={cart} />
+      
+      <Index />
+      {/* <Header cart={cart} />
       <Routes>
         <Route
           path="/trang-chu"
@@ -56,7 +57,7 @@ function App() {
         />
       </Routes>
 
-      <Footer />
+      <Footer /> */}
     </div>
   );
 }
