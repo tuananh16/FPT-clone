@@ -305,3 +305,10 @@
         }
     }
 }
+.option-tk{
+    &:hover {
+        .list-option{
+            display: block !important;
+        }
+    }
+}

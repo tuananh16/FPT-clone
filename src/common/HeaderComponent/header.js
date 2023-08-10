@@ -2,12 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import "./header.scss";
 import { Link } from "react-router-dom";
 import Login from "./login";
+import axios from "axios";
+
 // khôi phục tiếp
 //  khôi phục
-// list-option
-function Header({cart}) {
+// ======== list-option =====================
+function Header({ cart }) {
   const [isVisible, setIsVisible] = useState(false);
-
   const handleMouseEnter = () => {
     setIsVisible(true);
   };
@@ -15,7 +16,7 @@ function Header({cart}) {
     setIsVisible(false);
   };
 
-  // hover thẻ li các kiểu
+  // =================hover thẻ li các kiểu==================
   const [hoveredCategory, setHoveredCategory] = useState(null);
   const handleCategoryHover = () => {
     //categoryId
@@ -246,10 +247,9 @@ function Header({cart}) {
       name: "For Gamers",
     },
   ];
-  // ẩn hiện ô search
-  const [show, setShow] = useState(false);
- 
 
+  // ====================ẩn hiện ô search=====================
+  const [show, setShow] = useState(false);
   const handleClick = () => {
     setShow(true);
   };
@@ -265,14 +265,27 @@ function Header({cart}) {
       document.removeEventListener("mousedown", handleOutSideClick);
     };
   }, []);
-  // login =================================
-  const [login, setLogin] = useState(false)
-  const clickLogin = () => {
-    setLogin(true)
-  }
-  const handleClickoff= (e) => {
-    setLogin(e);
+
+  // ======== Sử lý phần Login ===================
+  const [username, setUsername] = useState(
+    localStorage.getItem("username") || "Tài khoản của tôi"
+  );
+  const [showLogout, setShowLogout] = useState(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem("username");
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    window.location.href = "/trang-chu";
+    setUsername("Tài khoản của tôi");
   };
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
+
   return (
     <div>
       {/* header 1 */}
@@ -340,16 +353,48 @@ function Header({cart}) {
                   <span>Thanh toán & tiện ích</span>
                 </a>
               </li>
-              <li onClick={clickLogin}  >
-                <a>
-                  <i className="fa-solid fa-circle-user"></i>
-                  <span  >Tài khoản của tôi</span>
-                </a>
+              <li style={{ minWidth: "80px", maxWidth:'150px', overflow:'hidden', textOverflow:'ellipsis',whiteSpace:'nowrap' }}>
+                {username !== "Tài khoản của tôi" ? (
+                  <a className="option-tk">
+                    <i className="fa-solid fa-circle-user"></i>
+                    <span>{username}</span>
+                    <div className="list-option" style={{ display: "none" }}>
+                      <ul>
+                        <li>Thông tin tài khoản</li>
+                        <li>Thông tin đơn hàng</li>
+                        <li
+                          onClick={handleLogout}
+                          style={{
+                            fontWeight: "800",
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <i
+                            className="fa-solid fa-right-from-bracket"
+                            style={{
+                              fontWeight: "800",
+                              display: "flex",
+                              flexDirection: "row",
+                              justifyContent: "center",
+                            }}
+                          />
+                          Đăng xuất
+                        </li>
+                      </ul>
+                    </div>
+                  </a>
+                ) : (
+                  <Link to="/dang-nhap">
+                    <i className="fa-solid fa-circle-user"></i>
+                    <span>{username}</span>
+                  </Link>
+                )}
               </li>
-              {login  && <Login handleClickoff ={handleClickoff}/>  }
 
               <li>
-                <Link to="/cart" style={{textDecoration:"none"}}>
+                <Link to="/cart" style={{ textDecoration: "none" }}>
                   <div
                     style={{
                       position: "absolute",

@@ -1,76 +1,116 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./login.scss";
 
-function Login({ handleClickoff }) {
-  const handleClick = () => {
-    handleClickoff(false);
-  };
+function Login() {
+  const [usernameLogin, setUsernameLogin] = useState("");
+  const [passwordLogin, setPasswordLogin] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessageLogin, setErrorMessageLogin] = useState("");
 
   const handlePassword = (e) => {
     setPassword(e.target.value);
-    console.log(e.target.value);
   };
   const handlePasswordAgain = (e) => {
     setPasswordAgain(e.target.value);
-    console.log(e.target.value);
   };
-  const handleForSubmit = (e) => {
-    e.preventDefault();
-    if (password !== passwordAgain) {
-      setErrorMessage("mật khẩu trong trùng khớp");
-    } else {
-      setErrorMessage("tạo tài khoản thành công. Mời bạn đăng nhập");
-      console.log("tK:" + username, "mk :" + password);
-      setUsername("");
-      setPassword("");
-      setPasswordAgain("");
-    }
+
+  // Đăng nhập ================================
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+    axios
+      .post("http://localhost:3000/auth/login", {
+        username: usernameLogin,
+        password: passwordLogin,
+      })
+      .then((response) => {
+        const { username, access_token, role } = response.data;
+        setUsernameLogin(username);
+        localStorage.setItem("username", usernameLogin);
+        localStorage.setItem("token", access_token);
+        localStorage.setItem("role", role);
+        if (role === 1) {
+          window.location.href = "/admin";
+        } else {
+          window.location.href = "/trang-chu";
+        }
+      })
+      .catch((error) => {
+        setErrorMessageLogin("Sai tài khoản hoặc mật khẩu");
+      });
+  };
+
+  // Đăng ký ===================================
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios
+      .post(`http://localhost:3000/auth/register`, {
+        username: username,
+        password: password,
+        repassword: passwordAgain,
+      })
+      .then((response) => {
+        const isNewRecord = response.data.status;
+        console.log(isNewRecord);
+        if (password !== passwordAgain) {
+          setErrorMessage("Mật khẩu không khớp");
+        } else if (isNewRecord === false) {
+          setErrorMessage("Tài khoản đã tồn tại");
+        } else {
+          setErrorMessage("Tạo tài khoản thành công. Mời bạn đăng nhập");
+          setUsername("");
+          setPassword("");
+          setPasswordAgain("");
+        }
+      })
+      .catch((error) => {
+        // Handle any error that occurred during the request
+        console.error(error);
+        setErrorMessage("Đã xảy ra lỗi trong quá trình đăng ký");
+      });
   };
   return (
     <div
       style={{
-        width: "100%",
-        height: "100%",
-        left: "0",
-        top: "0",
-        position: "fixed",
         display: "flex",
         justifyContent: "center",
-        zIndex: "100",
-        alignItems: "center",
+        padding: "20px 0px",
+        backgroundColor: "aqua",
       }}
     >
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          left: "0",
-          top: "0",
-          position: "fixed",
-          backgroundColor: "#00000090",
-          display: "flex",
-          justifyContent: "center",
-          zIndex: "100",
-        }}
-        onClick={handleClick}
-      ></div>
       <div className="main">
         <input type="checkbox" id="chk" aria-hidden="true" />
-
+        {/* ====== Đăng nhập ============ */}
         <div className="login">
-          <form className="form">
+          <form className="form" onSubmit={handleLogin}>
             <label htmlFor="chk" aria-hidden="true">
               Log in
             </label>
+            {errorMessageLogin && (
+              <p
+                className={
+                  errorMessage.includes("thành công") ? "success" : "error"
+                }
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  margin: "0",
+                }}
+              >
+                {errorMessageLogin}
+              </p>
+            )}
             <input
               className="input"
               type="text"
               name="txt"
               placeholder="Username"
+              value={usernameLogin}
+              onChange={(e) => setUsernameLogin(e.target.value)}
               required
             />
             <input
@@ -78,14 +118,16 @@ function Login({ handleClickoff }) {
               type="password"
               name="pswd"
               placeholder="Password"
+              value={passwordLogin}
+              onChange={(e) => setPasswordLogin(e.target.value)}
               required
             />
-            <button>Log in</button>
+            <button type="submit">Log in</button>
           </form>
         </div>
-
+        {/* ============== Đăng ký =========================*/}
         <div className="register">
-          <form className="form" onSubmit={handleForSubmit}>
+          <form className="form" onSubmit={handleSubmit}>
             <label htmlFor="chk" aria-hidden="true">
               Register
             </label>
@@ -94,7 +136,11 @@ function Login({ handleClickoff }) {
                 className={
                   errorMessage.includes("thành công") ? "success" : "error"
                 }
-                style={{display:'flex',justifyContent:'center'}}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  margin: "0",
+                }}
               >
                 {errorMessage}
               </p>
@@ -102,7 +148,7 @@ function Login({ handleClickoff }) {
             <input
               className="input"
               type="text"
-              name="txt"
+              name="username"
               placeholder="Username"
               required
               value={username}
@@ -112,7 +158,7 @@ function Login({ handleClickoff }) {
             <input
               className="input"
               type="password"
-              name="pswd"
+              name="password"
               placeholder="Password"
               required
               value={password}
@@ -121,13 +167,13 @@ function Login({ handleClickoff }) {
             <input
               className="input"
               type="password"
-              name="pswd again"
+              name="repassword"
               placeholder="Enter The Password Again"
               required
               value={passwordAgain}
               onChange={handlePasswordAgain}
             />
-            <button>Register</button>
+            <button type="submit">Register</button>
           </form>
         </div>
       </div>
