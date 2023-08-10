@@ -25,13 +25,13 @@ function Navbar() {
   };
   return (
     <div className="ad-navbar">
-      <Link to="/">
+      <Link to="admin/trang-chu">
         <div className="ad-navbar-logo">
           <img src="https://media3.scdn.vn/img4/2020/05_04/kJeRRsQS1Kzg5lZunJZB.png" />
         </div>
       </Link>
       <ul>
-        <Link to="/">
+        <Link to="admin/trang-chu">
           <li>
             <span>
               <img src="https://tse3.mm.bing.net/th?id=OIP.aFUA62GXzSVCvoHZp8-wxwHaHa&pid=Api&P=0&h=180" />
@@ -47,17 +47,17 @@ function Navbar() {
           </span>
           {showSubList1 && (
             <ul>
-              <Link to="/chua-hoan-thanh">
+              <Link to="admin/chua-hoan-thanh">
                 <li onClick={(event) => event.stopPropagation()}>
                   Chưa Hoàn Thành
                 </li>
               </Link>
-              <Link to="/da-hoan-thanh">
+              <Link to="admin/da-hoan-thanh">
                 <li onClick={(event) => event.stopPropagation()}>
                   Đã Hoàn Thành
                 </li>
               </Link>
-              <Link to="/all-don-hang">
+              <Link to="admin/all-don-hang">
                 <li onClick={(event) => event.stopPropagation()}>
                   Tất Cả Đơn Hàng
                 </li>
@@ -73,10 +73,10 @@ function Navbar() {
           </span>
           {showSubList2 && (
             <ul>
-              <Link to="/loai-san-pham/danh-sach">
+              <Link to="admin/loai-san-pham/danh-sach">
                 <li>Danh Sách</li>
               </Link>
-              <Link to="/loai-san-pham/them">
+              <Link to="admin/loai-san-pham/them">
                 <li>Thêm</li>
               </Link>
             </ul>
@@ -90,27 +90,10 @@ function Navbar() {
           </span>
           {showSubList3 && (
             <ul>
-              <Link to="/san-pham/danh-sach">
+              <Link to="admin/san-pham/danh-sach">
                 <li>Danh Sách</li>
               </Link>
-              <Link to="/san-pham/them">
-                <li>Thêm</li>
-              </Link>
-            </ul>
-          )}
-        </li>
-        <li onClick={handleToggleSubList4}>
-          <span>
-            <img src="https://tse2.mm.bing.net/th?id=OIP.UKb-LSLJTft1xPHNlt79sAHaHa&pid=Api&P=0&h=180" />
-            Ảnh sản phẩm
-            <i className="fa-solid fa-caret-down" />
-          </span>
-          {showSubList4 && (
-            <ul>
-              <Link to="/anh-san-pham/danh-sach">
-                <li>Danh Sách</li>
-              </Link>
-              <Link to="/anh-san-pham/them">
+              <Link to="admin/san-pham/them">
                 <li>Thêm</li>
               </Link>
             </ul>
