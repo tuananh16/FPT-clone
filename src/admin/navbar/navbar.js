@@ -39,6 +39,7 @@ function Navbar() {
             </span>
           </li>
         </Link>
+        {/*========== Đơn hàng================= */}
         <li onClick={handleToggleSubList1}>
           <span>
             <img src="https://cdn4.iconfinder.com/data/icons/delivery-29/128/11-512.png" />
@@ -65,6 +66,7 @@ function Navbar() {
             </ul>
           )}
         </li>
+        {/* ===========Loại sản phẩm ================== */}
         <li onClick={handleToggleSubList2}>
           <span>
             <img src="https://tse1.mm.bing.net/th?id=OIP.IpwQjLfvurMs8UJzj_31gAHaHa&pid=Api&P=0&h=180" />
@@ -82,6 +84,7 @@ function Navbar() {
             </ul>
           )}
         </li>
+        {/* ======================= Sản phẩm ==================== */}
         <li onClick={handleToggleSubList3}>
           <span>
             <img src="https://tse2.mm.bing.net/th?id=OIP.tCpf7Miad6ONbcc2-GbxFAHaHa&pid=Api&P=0&h=180" />

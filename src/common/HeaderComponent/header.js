@@ -353,7 +353,15 @@ function Header({ cart }) {
                   <span>Thanh toán & tiện ích</span>
                 </a>
               </li>
-              <li style={{ minWidth: "80px", maxWidth:'150px', overflow:'hidden', textOverflow:'ellipsis',whiteSpace:'nowrap' }}>
+              <li
+                style={{
+                  minWidth: "80px",
+                  maxWidth: "150px",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 {username !== "Tài khoản của tôi" ? (
                   <a className="option-tk">
                     <i className="fa-solid fa-circle-user"></i>
@@ -369,6 +377,7 @@ function Header({ cart }) {
                             display: "flex",
                             flexDirection: "row",
                             justifyContent: "center",
+                            alignItems: "center",
                           }}
                         >
                           <i
@@ -378,6 +387,7 @@ function Header({ cart }) {
                               display: "flex",
                               flexDirection: "row",
                               justifyContent: "center",
+                              marginRight: "10px",
                             }}
                           />
                           Đăng xuất

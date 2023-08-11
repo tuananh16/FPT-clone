@@ -1,36 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.scss";
+import axios from "axios";
 
 function ListProduct() {
-  const donChuaHT = [
-    {
-      id: 1,
-      maDH: "abc",
-      date: "27 / 8 / 2023",
-      name: "Nguyen tuan Anh",
-      phone: 999999999,
-      address: "ha noi",
-      giaohang: "Chuyen phat nhanh",
-      thanhToan: "chuyen khoan",
-      tinhTrangDon: "chua hoan thanh",
-    },
-    {
-      id: 2,
-      maDH: "abc",
-      date: "27 / 8 / 2023",
-      name: "Nguyen tuan Anh",
-      phone: 999999999,
-      address: "ha noi",
-      giaohang: "Chuyen phat nhanh",
-      thanhToan: "chuyen khoan",
-      tinhTrangDon: "chua hoan thanh",
-    },
-  ];
-  const [listOrder, setListOrder] = useState(donChuaHT);
+  const [data, setData] = useState("");
 
+  useEffect(() => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/posts")
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  if (!data) return null;
+
+  console.log(data);
+
+  // ====== delete product =======
   const handleDelete = (id) => {
-    const upDateList = listOrder.filter((e) => e.id !== id);
-    setListOrder(upDateList);
+    axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
+    setData(data.filter((e) => e.id !== id));
+  };
+  const handlesua = (id) => {
+    // axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
+    const sua = data.filter((e) => e.id === id);
+    console.log(sua);
+
+    // setData();
   };
 
   return (
@@ -40,21 +39,27 @@ function ListProduct() {
         <thead>
           <tr>
             <th>STT</th>
-            <th>ID</th>
-            <th>Danh Mục</th>
             <th>Loại Sản Phẩm</th>
-            <th>Tùy chỉnh</th>
+            <th>Tên Sản Phẩm</th>
+            <th>Màu</th>
+            <th>Giá </th>
+
+            <th>Số Lượng </th>
+            <th>Thay Đổi</th>
           </tr>
         </thead>
         <tbody>
-          {listOrder.map((e, index) => (
+          {data.map((e, index) => (
             <tr key={index}>
+              <td>{index + 1}</td>
               <td>{e.id}</td>
-              <td>{e.maDH}</td>
-              <td>{e.date}</td>
-              <td>{e.name}</td>
+              <td>{e.title}</td>
+              <td>{e.body}</td>
+              <td></td>
+              <td></td>
               <td>
-              <button style={{marginRight:"20px"}} >Sửa</button>
+                <button style={{ marginRight: "20px" }}
+                onClick={() => handlesua(e.id)}>Sửa</button>
                 <button onClick={() => handleDelete(e.id)}>Xóa</button>
               </td>
             </tr>
