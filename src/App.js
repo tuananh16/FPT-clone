@@ -5,7 +5,18 @@ import Layout from "./components/layout/layout";
 
 function App() {
   const role = localStorage.getItem("role");
- 
+  setTimeout(() => {
+    const storedUsername = localStorage.getItem("username");
+    
+    if (storedUsername) {
+      alert('Phiên đăng nhập đã hết hạn. Mời bạn đăng nhập lại');
+      localStorage.removeItem("username");
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      window.location.href = '/dang-nhap';
+    }
+  }, 24 * 60 * 60 * 1000);
+  
   return (
     <div className="App">
       <Routes>

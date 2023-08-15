@@ -4,32 +4,62 @@ import axios from "axios";
 
 function ListProduct() {
   const [data, setData] = useState("");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
     axios
-      .get("https://jsonplaceholder.typicode.com/posts")
+      .get("http://localhost:3000/product/list-product", config)
       .then((response) => {
-        setData(response.data);
+        setData(response.data.data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log("lỗi");
+        setData(error);
       });
   }, []);
-  if (!data) return null;
-
-  console.log(data);
+  if (!data)
+    return (
+      <div className="ad-home">
+        <h2>DANH SÁCH LOẠI SẢN PHẨM</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Loại Sản Phẩm</th>
+              <th>Tên Sản Phẩm</th>
+              <th>Màu</th>
+              <th>Giá </th>
+              <th>Số Lượng </th>
+              <th>Thay Đổi</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    );
 
   // ====== delete product =======
-  const handleDelete = (id) => {
-    axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
-    setData(data.filter((e) => e.id !== id));
+  const handleDelete = async (id) => {
+    try {
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      await axios.delete(
+        `http://localhost:3000/product/delete/?id=${id}`,
+        config
+      );
+      setData((prevData) => prevData.filter((item) => item.id !== id));
+    } catch (error) {
+      console.log("Error deleting product:", error);
+    }
   };
-  const handlesua = (id) => {
-    // axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
-    const sua = data.filter((e) => e.id === id);
-    console.log(sua);
 
-    // setData();
+  const handlesua = (event) => {
+    // axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
+    const sua = event.target.id;
+    console.log(sua);
   };
 
   return (
@@ -43,7 +73,6 @@ function ListProduct() {
             <th>Tên Sản Phẩm</th>
             <th>Màu</th>
             <th>Giá </th>
-
             <th>Số Lượng </th>
             <th>Thay Đổi</th>
           </tr>
@@ -52,14 +81,15 @@ function ListProduct() {
           {data.map((e, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>{e.id}</td>
-              <td>{e.title}</td>
-              <td>{e.body}</td>
-              <td></td>
-              <td></td>
+              <td>{e.categoryName}</td>
+              <td>{e.productName}</td>
+              <td>{e.color}</td>
+              <td>{new Intl.NumberFormat("vi-VN").format(e.price)} đ</td>
+              <td>{e.quantity}</td>
               <td>
-                <button style={{ marginRight: "20px" }}
-                onClick={() => handlesua(e.id)}>Sửa</button>
+                <button style={{ marginRight: "20px" }} onClick={handlesua}>
+                  Sửa
+                </button>
                 <button onClick={() => handleDelete(e.id)}>Xóa</button>
               </td>
             </tr>

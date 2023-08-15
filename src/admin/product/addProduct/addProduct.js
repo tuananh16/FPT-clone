@@ -3,23 +3,30 @@ import axios from "axios";
 import "./style.scss";
 
 function AddProduct() {
+  const token = localStorage.getItem("token");
+
   const [productData, setProductData] = useState({
-    type: "",
     name: "",
-    color: "",
-    price: 0,
-    olePrice: 0,
+    price: "0",
+    oldprice: "0",
+    categoryId: "0",
     cpu: "",
-    ram: "",
-    rom: "",
-    screen: "",
-    weight: "",
-    quantity: 0,
+    ram: "0",
+    rom: "0",
+    screen: "0",
+    weight: "0",
+    colorId: "0",
+    quantity: "1",
+    coverImage: [],
+    Images: [],
   });
   const [data, setData] = useState(null);
   useEffect(() => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
     axios
-      .get("https://jsonplaceholder.typicode.com/posts/1/comments")
+      .get("http://localhost:3000/product/create", config)
       .then((response) => {
         setData(response.data);
       })
@@ -28,43 +35,72 @@ function AddProduct() {
         setData(error);
       });
   }, []);
+
   if (!data) return null;
-
+  // console.log(data);
+  ///////////////////////////////////////////////////
   const handleChange = (e) => {
-    const {name,value} = e.target;
-    setProductData((prevData) => ({
-      ...prevData,
-      [name]:value
-    }))
-  };
+    const { name, value, type, files } = e.target;
 
-  console.log(productData)
+    if (type === "file") {
+      if (name === "coverImage") {
+        setProductData((prevData) => ({
+          ...prevData,
+          coverImage: files[0],
+        }));
+      } else if (name === "Images") {
+        setProductData((prevData) => ({
+          ...prevData,
+          Images: files,
+        }));
+      }
+    } else {
+      setProductData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
   const handleSubmit = (event) => {
+    console.log(token);
     const config = {
-      // headers: { Authorization: `Bearer ${token}` }
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
     };
     event.preventDefault();
+
     axios
-      .post("http://localhost:3000/auth/addProduct", {
-        config,
+      .post("http://localhost:3000/product/create", productData, config)
+
+      .then((response) => {
+        console.log("Sản phẩm đã được tạo thành công:", response.data);
       })
-      .then((response) => {})
-      .catch((error) => {});
+      .catch((error) => {
+        console.error("Đã xảy ra lỗi:", error.response.data);
+      });
   };
+  console.log(productData);
+
   return (
     <div className="ad-home">
       <h2>Thêm sản phẩm</h2>
-      <form className="abc">
+      <form className="abc" onSubmit={handleSubmit}>
         <div className="ad-wrap">
           <p>Loại sản phẩm</p>
-          <select value={productData.type} name="type" onChange={handleChange}>
-            <option value=''>
-              --Chọn--
-              {/* <i className="fa-solid fa-caret-down"></i> */}
-            </option>
-            <option value='option1'>Điện Thoại</option>
-            <option value='option2'>Laptop</option>
-            <option value='option3'>Tablet</option>
+          <select
+            value={productData.categoryId}
+            name="categoryId"
+            onChange={handleChange}
+            required
+          >
+            <option>--Chọn--</option>
+            {data.categories.map((e, index) => (
+              <option key={index} value={e.id}>
+                {e.categoryName}
+              </option>
+            ))}
           </select>
           <p>Tên sản phẩm</p>
           <input
@@ -76,22 +112,28 @@ function AddProduct() {
             required
           />
           <p>Màu sản phẩm</p>
-          <select>
+          <select
+            value={productData.colorId}
+            name="colorId"
+            onChange={handleChange}
+            required
+          >
             <option>
               --Chọn--
               {/* <i className="fa-solid fa-caret-down"></i> */}
             </option>
-            {data.map((e, index) => (
-              <option key={index}>{e.name}</option>
+            {data.colors.map((e, index) => (
+              <option key={index} value={e.id}>
+                {e.name}
+              </option>
             ))}
-            <option>Đen</option>
-            <option>Đỏ</option>
-            <option>Hồng</option>
           </select>
           <p>Giá sản phẩm</p>
           <input
             type="number"
             name="price"
+            min="0"
+            step="1000"
             value={productData.price}
             onChange={handleChange}
             placeholder="Nhập giá sản phẩm"
@@ -100,8 +142,10 @@ function AddProduct() {
           <p>Giá cũ sản phẩm</p>
           <input
             type="number"
-            name=""
-            value={productData.olePrice}
+            name="oldprice"
+            min="0"
+            step="1000"
+            value={productData.oldprice}
             onChange={handleChange}
             placeholder="Nhập giá cũ sản phẩm"
             required
@@ -118,7 +162,7 @@ function AddProduct() {
           <p>Ram</p>
           <input
             required
-            type="text"
+            type="number"
             name="ram"
             value={productData.ram}
             onChange={handleChange}
@@ -127,7 +171,7 @@ function AddProduct() {
           <p>Rom</p>
           <input
             required
-            type="text"
+            type="number"
             name="rom"
             value={productData.rom}
             onChange={handleChange}
@@ -136,17 +180,19 @@ function AddProduct() {
           <p>Màn hình</p>
           <input
             required
-            type="text"
+            type="number"
             name="screen"
             value={productData.screen}
+            step="0.1"
             onChange={handleChange}
             placeholder="Nhập tên màn hình"
           />
           <p>Trọng lượng</p>
           <input
             required
-            type="text"
+            type="number"
             name="weight"
+            step="0.01"
             value={productData.weight}
             onChange={handleChange}
             placeholder="Nhập tên Trọng lượng"
@@ -156,14 +202,15 @@ function AddProduct() {
             required
             type="number"
             name="quantity"
+            min="0"
             value={productData.quantity}
             onChange={handleChange}
             placeholder="Nhập số lượng"
           />
           <p>Ảnh đại diện</p>
-          <input required type="file" />
+          <input name="coverImage" type="file" onChange={handleChange} />
           <p>Ảnh sản phẩm</p>
-          <input required type="file" multiple />
+          <input name="Images" type="file" onChange={handleChange} multiple />
         </div>
         <button name="submit" type="submit">
           Gửi
