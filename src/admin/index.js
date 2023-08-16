@@ -11,13 +11,15 @@ import { Routes, Route } from "react-router-dom";
 import AddProductType from "./productType/addProductType/addProductType";
 import ListProduct from "./product/listProduct/listProduct";
 import AddProduct from "./product/addProduct/addProduct";
+import ColorAdd from "./colorType/colorAdd/colorAdd";
+import ColorList from "./colorType/colorList/colorList";
 
 function Index({ role }) {
   useEffect(() => {
     if (role !== "1") {
       console.log(111111);
       window.location.href = "/";
-      return ;
+      return;
     }
   }, [role]);
 
@@ -45,6 +47,11 @@ function Index({ role }) {
               path="admin/loai-san-pham/them"
               element={<AddProductType />}
             />
+            <Route
+              path="admin/loai-mau/danh-sach"
+              element={<ColorList/>}
+            />
+            <Route path="admin/loai-mau/them" element={<ColorAdd/>} />
             <Route path="admin/san-pham/danh-sach" element={<ListProduct />} />
             <Route path="admin/san-pham/them" element={<AddProduct />} />
           </Routes>

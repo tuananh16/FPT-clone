@@ -51,6 +51,7 @@ function ListProduct() {
         config
       );
       setData((prevData) => prevData.filter((item) => item.id !== id));
+      alert('Bạn chắc chắn xóa sản phẩm này')
     } catch (error) {
       console.log("Error deleting product:", error);
     }

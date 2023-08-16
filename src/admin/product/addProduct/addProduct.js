@@ -7,20 +7,21 @@ function AddProduct() {
 
   const [productData, setProductData] = useState({
     name: "",
-    price: "0",
-    oldprice: "0",
-    categoryId: "0",
+    price: 0,
+    oldprice: 0,
+    categoryId: "1",
     cpu: "",
-    ram: "0",
-    rom: "0",
-    screen: "0",
-    weight: "0",
-    colorId: "0",
-    quantity: "1",
-    coverImage: [],
+    ram: 0,
+    rom: 0,
+    screen: 0,
+    weight: 0,
+    colorId: "1",
+    quantity: 1,
+    coverImage: null,
     Images: [],
   });
   const [data, setData] = useState(null);
+
   useEffect(() => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
@@ -31,14 +32,13 @@ function AddProduct() {
         setData(response.data);
       })
       .catch((error) => {
-        console.log("lỗi");
-        setData(error);
+        console.error("Error:", error);
+        setData(null);
       });
   }, []);
+  if (!data) return <div>Loading...</div>;
 
-  if (!data) return null;
-  // console.log(data);
-  ///////////////////////////////////////////////////
+  // ============== post =====================
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
 
@@ -51,7 +51,7 @@ function AddProduct() {
       } else if (name === "Images") {
         setProductData((prevData) => ({
           ...prevData,
-          Images: files,
+          Images: Array.from(files),
         }));
       }
     } else {
@@ -61,27 +61,43 @@ function AddProduct() {
       }));
     }
   };
-  const handleSubmit = (event) => {
-    console.log(token);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    for (const key in productData) {
+      if (key === "Images") {
+        productData.Images.forEach((image) => {
+          formData.append("Images", image);
+        });
+      } else {
+        formData.append(key, productData[key]);
+      }
+    }
+
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
       },
     };
-    event.preventDefault();
 
-    axios
-      .post("http://localhost:3000/product/create", productData, config)
-
-      .then((response) => {
-        console.log("Sản phẩm đã được tạo thành công:", response.data);
-      })
-      .catch((error) => {
-        console.error("Đã xảy ra lỗi:", error.response.data);
-      });
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/product/create",
+        formData,
+        config
+      );
+      console.log("Sản phẩm đã được tạo thành công:", response.data);
+      return window.location.href("/admin/admin/san-pham/danh-sach");
+    } catch (error) {
+      console.error(
+        "Đã xảy ra lỗi:",
+        error.response ? error.response.data : error.message
+      );
+    }
   };
-  console.log(productData);
 
   return (
     <div className="ad-home">
@@ -95,7 +111,7 @@ function AddProduct() {
             onChange={handleChange}
             required
           >
-            <option>--Chọn--</option>
+            <option disabled>--Chọn--</option>
             {data.categories.map((e, index) => (
               <option key={index} value={e.id}>
                 {e.categoryName}
@@ -118,7 +134,7 @@ function AddProduct() {
             onChange={handleChange}
             required
           >
-            <option>
+            <option disabled>
               --Chọn--
               {/* <i className="fa-solid fa-caret-down"></i> */}
             </option>
@@ -132,7 +148,7 @@ function AddProduct() {
           <input
             type="number"
             name="price"
-            min="0"
+            min="1000"
             step="1000"
             value={productData.price}
             onChange={handleChange}
@@ -143,7 +159,7 @@ function AddProduct() {
           <input
             type="number"
             name="oldprice"
-            min="0"
+            min="1000"
             step="1000"
             value={productData.oldprice}
             onChange={handleChange}
@@ -164,6 +180,8 @@ function AddProduct() {
             required
             type="number"
             name="ram"
+            min="8"
+            step="4"
             value={productData.ram}
             onChange={handleChange}
             placeholder="Nhập tên Ram"
@@ -173,6 +191,7 @@ function AddProduct() {
             required
             type="number"
             name="rom"
+            min="0"
             value={productData.rom}
             onChange={handleChange}
             placeholder="Nhập tên Rom"
@@ -183,6 +202,7 @@ function AddProduct() {
             type="number"
             name="screen"
             value={productData.screen}
+            min="0"
             step="0.1"
             onChange={handleChange}
             placeholder="Nhập tên màn hình"
@@ -192,6 +212,7 @@ function AddProduct() {
             required
             type="number"
             name="weight"
+            min="0"
             step="0.01"
             value={productData.weight}
             onChange={handleChange}
@@ -208,9 +229,20 @@ function AddProduct() {
             placeholder="Nhập số lượng"
           />
           <p>Ảnh đại diện</p>
-          <input name="coverImage" type="file" onChange={handleChange} />
+          <input
+            required
+            name="coverImage"
+            type="file"
+            onChange={handleChange}
+          />
           <p>Ảnh sản phẩm</p>
-          <input name="Images" type="file" onChange={handleChange} multiple />
+          <input
+            required
+            name="Images"
+            type="file"
+            onChange={handleChange}
+            multiple
+          />
         </div>
         <button name="submit" type="submit">
           Gửi

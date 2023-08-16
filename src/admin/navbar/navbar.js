@@ -84,6 +84,24 @@ function Navbar() {
             </ul>
           )}
         </li>
+        {/* ===========Loại Màu  ================== */}
+        <li onClick={handleToggleSubList4}>
+          <span>
+            <img src="https://cdn.tgdd.vn/ValueIcons/14/icon_da_sac.png" />
+            Loại Màu
+            <i className="fa-solid fa-caret-down" />
+          </span>
+          {showSubList4 && (
+            <ul>
+              <Link to="admin/loai-mau/danh-sach">
+                <li>Danh Sách</li>
+              </Link>
+              <Link to="admin/loai-mau/them">
+                <li>Thêm</li>
+              </Link>
+            </ul>
+          )}
+        </li>
         {/* ======================= Sản phẩm ==================== */}
         <li onClick={handleToggleSubList3}>
           <span>

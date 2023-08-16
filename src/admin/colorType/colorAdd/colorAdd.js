@@ -1,13 +1,16 @@
 import React from "react";
-import "./style.scss";
+import "./style.scss"
 
-function AddProductType() {
+function ColorAdd() {
   return (
     <div className="ad-home">
-      <h2>Thêm Loại sản phẩm</h2>
-      <form>
+        <h2>Thêm Loại Màu</h2>
+      <form >
+        
         <br />
-        <label htmlFor="loaisanpham_name">Vui lòng nhập Loại sản phẩm</label>
+        <label htmlFor="loaisanpham_name">
+          Vui lòng chọn Loại sản phẩm
+        </label>
         <br />
         <input
           className="subcartegory-input"
@@ -23,4 +26,4 @@ function AddProductType() {
   );
 }
 
-export default AddProductType;
+export default ColorAdd;
