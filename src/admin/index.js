@@ -34,7 +34,7 @@ function Index({ role }) {
       <Header />
       <div style={{ display: "flex" }}>
         <Navbar />
-        <div>
+        <div style={{width:'80%'}}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="admin/trang-chu" element={<HomePage />} />
