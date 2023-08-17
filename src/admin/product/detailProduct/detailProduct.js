@@ -68,7 +68,7 @@ function DetailProduct() {
               <div className="color-product">
                 {/* test màu */}
                 <p>Màu Sắc:</p>
-                <div style={{marginLeft:'15px', width:'80%'}}>
+                <div style={{marginLeft:'15px', width:'80%', display:'flex'}}>
                   {detailProduct.metaData.map((e, index) => (
                     <div key={index} className="wrap-color">
                       <div
