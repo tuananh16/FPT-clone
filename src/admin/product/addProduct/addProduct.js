@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import "./style.scss";
 
@@ -15,7 +17,7 @@ function AddProduct() {
     rom: 0,
     screen: 0,
     weight: 0,
-    colorId: "1",
+    colorId: "24",
     quantity: 1,
     coverImage: null,
     Images: [],
@@ -89,8 +91,31 @@ function AddProduct() {
         formData,
         config
       );
-      console.log("Sản phẩm đã được tạo thành công:", response.data);
-      return window.location.href("/admin/admin/san-pham/danh-sach");
+      toast.success("🦄 Tạo sản phẩm thành công!", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      setProductData({
+        name: "",
+        price: 0,
+        oldprice: 0,
+        categoryId: "1",
+        cpu: "",
+        ram: 0,
+        rom: 0,
+        screen: 0,
+        weight: 0,
+        colorId: "1",
+        quantity: 1,
+        coverImage: "",
+        Images: [""],
+      });
     } catch (error) {
       console.error(
         "Đã xảy ra lỗi:",
@@ -98,7 +123,7 @@ function AddProduct() {
       );
     }
   };
-
+  // console.log(colorId)
   return (
     <div className="ad-home">
       <h2>Thêm sản phẩm</h2>
@@ -134,12 +159,13 @@ function AddProduct() {
             onChange={handleChange}
             required
           >
-            <option disabled>
-              --Chọn--
-              {/* <i className="fa-solid fa-caret-down"></i> */}
-            </option>
+            <option disabled>--Chọn--</option>
             {data.colors.map((e, index) => (
-              <option key={index} value={e.id}>
+              <option
+                key={index}
+                value={e.id}
+                style={{ backgroundColor: e.name , color:'#fff'}}
+              >
                 {e.name}
               </option>
             ))}
@@ -248,6 +274,7 @@ function AddProduct() {
           Gửi
         </button>
       </form>
+      <ToastContainer />
     </div>
   );
 }

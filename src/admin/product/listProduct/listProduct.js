@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from "react";
 import "./style.scss";
+import React, { useEffect, useState } from "react";
+import "react-confirm-alert/src/react-confirm-alert.css";
 import axios from "axios";
+import { confirmAlert } from "react-confirm-alert";
+import { Link } from "react-router-dom";
+
+// import {anh} from '../../../../../New folder/files/'
 
 function ListProduct() {
   const [data, setData] = useState("");
   const token = localStorage.getItem("token");
+  /////////////////////////////////////////
 
+  /////////////////////////////////////
   useEffect(() => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
@@ -23,7 +30,7 @@ function ListProduct() {
   if (!data)
     return (
       <div className="ad-home">
-        <h2>DANH SÁCH LOẠI SẢN PHẨM</h2>
+        <h2>DANH SÁCH SẢN PHẨM</h2>
         <table>
           <thead>
             <tr>
@@ -41,27 +48,35 @@ function ListProduct() {
     );
 
   // ====== delete product =======
-  const handleDelete = async (id) => {
-    try {
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
-      await axios.delete(
-        `http://localhost:3000/product/delete/?id=${id}`,
-        config
-      );
-      setData((prevData) => prevData.filter((item) => item.id !== id));
-      alert('Bạn chắc chắn xóa sản phẩm này')
-    } catch (error) {
-      console.log("Error deleting product:", error);
-    }
+  const handleDelete = (id) => {
+    confirmAlert({
+      title: "Bạn có chắc xóa sản phẩm này không",
+      buttons: [
+        {
+          label: "OK",
+          onClick: async () => {
+            try {
+              const config = {
+                headers: { Authorization: `Bearer ${token}` },
+              };
+              await axios.delete(
+                `http://localhost:3000/product/delete/?id=${id}`,
+                config
+              );
+              setData((prevData) => prevData.filter((item) => item.id !== id));
+            } catch (error) {
+              console.log("Error deleting product:", error);
+            }
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
   };
-
-  const handlesua = (event) => {
-    // axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
-    const sua = event.target.id;
-    console.log(sua);
-  };
+  
 
   return (
     <div className="ad-home">
@@ -72,9 +87,9 @@ function ListProduct() {
             <th>STT</th>
             <th>Loại Sản Phẩm</th>
             <th>Tên Sản Phẩm</th>
-            <th>Màu</th>
+            <th>Ảnh</th>
             <th>Giá </th>
-            <th>Số Lượng </th>
+            <th>SL </th>
             <th>Thay Đổi</th>
           </tr>
         </thead>
@@ -84,11 +99,20 @@ function ListProduct() {
               <td>{index + 1}</td>
               <td>{e.categoryName}</td>
               <td>{e.productName}</td>
-              <td>{e.color}</td>
+              <td>
+                <img
+                  style={{ maxHeight: "70px", maxWidth: "70px" }}
+                  src={`http://localhost:3000/${e.coverImgPath}`}
+                  alt="Màu"
+                />
+              </td>
               <td>{new Intl.NumberFormat("vi-VN").format(e.price)} đ</td>
               <td>{e.quantity}</td>
               <td>
-                <button style={{ marginRight: "20px" }} onClick={handlesua}>
+                <Link to={`/admin/admin/san-pham/chi-tiet-san-pham/${e.id}`}>
+                  <button>Xem Chi Tiết</button>
+                </Link>
+                <button style={{ margin: "0 5px" }} >
                   Sửa
                 </button>
                 <button onClick={() => handleDelete(e.id)}>Xóa</button>
