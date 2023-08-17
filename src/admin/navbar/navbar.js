@@ -114,8 +114,12 @@ function Navbar() {
               <Link to="admin/san-pham/danh-sach">
                 <li>Danh Sách</li>
               </Link>
+              
               <Link to="admin/san-pham/them">
                 <li>Thêm</li>
+              </Link>
+              <Link to="admin/san-pham/mau-san-pham">
+                <li>Thêm Màu Cho Sản Phẩm </li>
               </Link>
             </ul>
           )}

@@ -33,7 +33,7 @@ function ColorList() {
           <tr>
             <th>STT</th>
             <th>ID</th>
-            <th>Loại Sản Phẩm</th>
+            <th>Loại Màu</th>
             <th>Tùy chỉnh</th>
           </tr>
         </thead>
@@ -42,7 +42,19 @@ function ColorList() {
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{e.id}</td>
-              <td>{e.name}</td>
+              <td >
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <div style={{width:'80px'}}>{e.name}</div>
+                  <div
+                    style={{
+                      width: "20px",
+                      height: "20px",
+                      backgroundColor: e.name,
+                      marginLeft:"10px"
+                    }}
+                  ></div>
+                </div>
+              </td>
               <td>
                 <button onClick={() => handleDelete(e.id)}>Xóa</button>
               </td>

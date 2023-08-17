@@ -35,6 +35,7 @@ function ListProduct() {
           <thead>
             <tr>
               <th>STT</th>
+              <th>ID</th>
               <th>Loại Sản Phẩm</th>
               <th>Tên Sản Phẩm</th>
               <th>Màu</th>
@@ -85,6 +86,7 @@ function ListProduct() {
         <thead>
           <tr>
             <th>STT</th>
+            <th>ID</th>
             <th>Loại Sản Phẩm</th>
             <th>Tên Sản Phẩm</th>
             <th>Ảnh</th>
@@ -97,6 +99,7 @@ function ListProduct() {
           {data.map((e, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
+              <td>{e.id}</td>
               <td>{e.categoryName}</td>
               <td>{e.productName}</td>
               <td>

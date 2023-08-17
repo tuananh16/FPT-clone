@@ -8,8 +8,8 @@ function ColorAdd() {
   const token = localStorage.getItem("token");
   const [color, setColor] = useState("");
 
-  const test = color.split("#").pop(1)
-  
+  const test = color.split("#").pop(1);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -18,7 +18,11 @@ function ColorAdd() {
     };
 
     axios
-      .post(`http://localhost:3000/color/create/?color=%23${test}`, { color: color }, config)
+      .post(
+        `http://localhost:3000/color/create/?color=%23${test}`,
+        { color: color },
+        config
+      )
       .then((response) => {
         if (response.status === 201) {
           toast.success("🦄 Tạo màu thành công!", {
@@ -63,8 +67,10 @@ function ColorAdd() {
           name="color"
           value={color}
           onChange={(e) => setColor(e.target.value)}
+          style={{ width: "100px" }}
           required
         />
+        <br />
         <button type="submit">Gửi</button>
       </form>
       <ToastContainer />

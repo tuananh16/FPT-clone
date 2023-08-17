@@ -40,26 +40,50 @@ function DetailProduct() {
             </div>
           </div>
           <div className="ad-body">
-            <div className="ad-body-left">
-              <img src={`http://localhost:3000/${detailProduct.coverImg}`} />
+            <div
+              className="ad-body-left"
+              style={{ display: "flex", flexDirection: "column" }}
+            >
+              <img
+                style={{ marginBottom: "24px" }}
+                src={`http://localhost:3000/${detailProduct.coverImg}`}
+              />
+
+              {/* <div style={{ display: "flex", justifyContent: "center" }}>
+                {detailProduct.imagesList.map((e, index) => (
+                  <div key={index}>
+                    <img
+                      style={{
+                        maxWidth: "100px",
+                        maxHeight: "100px",
+                        marginRight: "10px",
+                      }}
+                      src={`http://localhost:3000/${e}`}
+                    />
+                  </div>
+                ))}
+              </div> */}
             </div>
             <div className="ad-body-right">
               <div className="color-product">
                 {/* test màu */}
-                {detailProduct.metaData.map((e, index) => (
-                  <div key={index} className="wrap-color">
-                    <div
-                      className="color-icon"
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "50%",
-                        backgroundColor: e.colorName,
-                      }}
-                    ></div>
-                    <p>SL: {e.quantity}</p>
-                  </div>
-                ))}
+                <p>Màu Sắc:</p>
+                <div style={{marginLeft:'15px', width:'80%'}}>
+                  {detailProduct.metaData.map((e, index) => (
+                    <div key={index} className="wrap-color">
+                      <div
+                        className="color-icon"
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                          borderRadius: "50%",
+                          backgroundColor: e.colorName,
+                        }}
+                      ></div>
+                      <p>SL: {e.quantity}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
               <div className="param-detail">
                 <ul>
