@@ -1,6 +1,8 @@
 import "./style.scss";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { Slide } from "react-slideshow-image";
+import "react-slideshow-image/dist/styles.css";
 
 function DetailProduct() {
   const token = localStorage.getItem("token");
@@ -42,33 +44,40 @@ function DetailProduct() {
           <div className="ad-body">
             <div
               className="ad-body-left"
-              style={{ display: "flex", flexDirection: "column" }}
+              style={{ display: "flex", flexDirection: "column",}}
             >
-              <img
-                style={{ marginBottom: "24px" }}
-                src={`http://localhost:3000/${detailProduct.coverImg}`}
-              />
-
-              {/* <div style={{ display: "flex", justifyContent: "center" }}>
+              <Slide slidesToScroll={1} slidesToShow={1} indicators={true}>
+                <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+                  <img
+                    // style={{ marginBottom: "24px" }}
+                    src={`http://localhost:3000/${detailProduct.coverImg}`}
+                    alt="Cover Image"
+                  />
+                </div>
                 {detailProduct.imagesList.map((e, index) => (
                   <div key={index}>
                     <img
                       style={{
-                        maxWidth: "100px",
-                        maxHeight: "100px",
-                        marginRight: "10px",
+                        width:'500px',
+                        height:'500px',
+                        display:'flex',
+                        justifyContent:'center'
                       }}
                       src={`http://localhost:3000/${e}`}
+                      alt={`Image ${index}`}
                     />
                   </div>
                 ))}
-              </div> */}
+              </Slide>
             </div>
+
             <div className="ad-body-right">
               <div className="color-product">
                 {/* test màu */}
                 <p>Màu Sắc:</p>
-                <div style={{marginLeft:'15px', width:'80%', display:'flex'}}>
+                <div
+                  style={{ marginLeft: "15px", width: "80%", display: "flex" }}
+                >
                   {detailProduct.metaData.map((e, index) => (
                     <div key={index} className="wrap-color">
                       <div
