@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { confirmAlert } from "react-confirm-alert";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./style.scss";
 import axios from "axios";
 
@@ -23,7 +25,7 @@ function ColorList() {
   if (!colorList) return null;
   const handleDelete = (id) => {
     confirmAlert({
-      title: "Bạn có chắc xóa sản phẩm này không",
+      title: "Bạn có chắc xóa màu này không",
       buttons: [
         {
           label: "OK",
@@ -32,13 +34,40 @@ function ColorList() {
               const config = {
                 headers: { Authorization: `Bearer ${token}` },
               };
-              await axios.delete(
+              const result = await axios.delete(
                 `http://localhost:3000/color/delete?id=${id}`,
                 config
               );
-              setColorList((prevData) =>
-                prevData.filter((item) => item.id !== id)
-              );
+              if (result.data.status === false) {
+                toast.error(
+                  "Xóa sản phẩm thất bại do còn sản phẩm dùng màu này",
+                  {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                  }
+                );
+                console.log("xóa đéo đc");
+              } else {
+                setColorList((prevData) =>
+                  prevData.filter((item) => item.id !== id)
+                );
+                toast.success("🦄 Xóa sản phẩm thành công!", {
+                  position: "top-right",
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "dark",
+                });
+              }
             } catch (error) {
               console.log("Error deleting product:", error);
             }
@@ -89,6 +118,7 @@ function ColorList() {
           ))}
         </tbody>
       </table>
+      <ToastContainer />
     </div>
   );
 }

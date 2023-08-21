@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { confirmAlert } from "react-confirm-alert";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./style.scss";
 import axios from "axios";
 
@@ -21,7 +23,7 @@ function ListProductType() {
       });
   }, []);
   if (!listProductType) return null;
-  
+
   const handleDelete = (id) => {
     confirmAlert({
       title: "Bạn có chắc xóa sản phẩm này không",
@@ -33,13 +35,40 @@ function ListProductType() {
               const config = {
                 headers: { Authorization: `Bearer ${token}` },
               };
-              await axios.delete(
+              const result = await axios.delete(
                 `http://localhost:3000/categories/delete?id=${id}`,
                 config
               );
-              setlistProductType((prevData) =>
-                prevData.filter((item) => item.id !== id)
-              );
+              if (result.data.status === false) {
+                toast.error(
+                  "Xóa sản phẩm thất bại do còn sản phẩm dùng loại sản phẩm này",
+                  {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                  }
+                );
+                console.log("xóa đéo đc");
+              } else {
+                setlistProductType((prevData) =>
+                  prevData.filter((item) => item.id !== id)
+                );
+                toast.success("🦄 Xóa sản phẩm thành công!", {
+                  position: "top-right",
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "dark",
+                });
+              }
             } catch (error) {
               console.log("Error deleting product:", error);
             }
@@ -78,6 +107,7 @@ function ListProductType() {
           ))}
         </tbody>
       </table>
+      <ToastContainer />
     </div>
   );
 }

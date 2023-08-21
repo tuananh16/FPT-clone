@@ -43,6 +43,10 @@ function DetailProduct() {
                 MSP:{detailProduct.id}
               </p>
             </div>
+            <h2>Tổng sản phẩm: <span
+              style={{color:"#000"}}
+            >{detailProduct.totalQuantity}</span> sp</h2>
+
             <div className="ad-price">
               <h2>
                 {new Intl.NumberFormat("vi-VN").format(detailProduct.price)} đ
@@ -92,6 +96,7 @@ function DetailProduct() {
             <div className="ad-body-right">
               <div className="color-product">
                 {/* test màu */}
+
                 <div className="category-imformation">
                   <p>Màu Sắc:</p>
                   <p>Thay Đổi: </p>
