@@ -15,6 +15,7 @@ import ColorAdd from "./colorType/colorAdd/colorAdd";
 import ColorList from "./colorType/colorList/colorList";
 import DetailProduct from "./product/detailProduct/detailProduct";
 import AddColorProduct from "./product/addColorProduct/addColorProduct";
+import FixProduct from "./product/fixProduct/fixProduct";
 
 function Index({ role }) {
   useEffect(() => {
@@ -56,6 +57,7 @@ function Index({ role }) {
             <Route path="admin/loai-mau/them" element={<ColorAdd/>} />
             <Route path="admin/san-pham/danh-sach" element={<ListProduct />} />
             <Route path="admin/san-pham/chi-tiet-san-pham/:id" element={<DetailProduct />} />
+            <Route path="admin/san-pham/sua/:id" element={<FixProduct />} />
             <Route path="admin/san-pham/them" element={<AddProduct />} />
             <Route path="admin/san-pham/mau-san-pham" element={<AddColorProduct/>} />
           </Routes>

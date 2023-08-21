@@ -10,6 +10,13 @@ function DetailProduct() {
   const path = window.location.href;
   // console.log(path.split('/').pop(7))
   const id = path.split("/").pop(7);
+  // ======== xóa màu =================
+  const handleDelete = (colorId) => {
+    console.log(colorId);
+  };
+  // ======= sửa màu ================
+
+  // ================================
   useEffect(() => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
@@ -30,7 +37,12 @@ function DetailProduct() {
       {detailProduct && (
         <div className="ad-home">
           <div className="ad-header-detail">
-            <h1>{detailProduct.name}</h1>
+            <div style={{ display: "flex", alignItems: "baseline" }}>
+              <h1>{detailProduct.name}</h1>
+              <p style={{ margin: 0, paddingLeft: "10px" }}>
+                MSP:{detailProduct.id}
+              </p>
+            </div>
             <div className="ad-price">
               <h2>
                 {new Intl.NumberFormat("vi-VN").format(detailProduct.price)} đ
@@ -44,10 +56,16 @@ function DetailProduct() {
           <div className="ad-body">
             <div
               className="ad-body-left"
-              style={{ display: "flex", flexDirection: "column",}}
+              style={{ display: "flex", flexDirection: "column" }}
             >
               <Slide slidesToScroll={1} slidesToShow={1} indicators={true}>
-                <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <img
                     // style={{ marginBottom: "24px" }}
                     src={`http://localhost:3000/${detailProduct.coverImg}`}
@@ -58,10 +76,10 @@ function DetailProduct() {
                   <div key={index}>
                     <img
                       style={{
-                        width:'500px',
-                        height:'500px',
-                        display:'flex',
-                        justifyContent:'center'
+                        width: "500px",
+                        height: "500px",
+                        display: "flex",
+                        justifyContent: "center",
                       }}
                       src={`http://localhost:3000/${e}`}
                       alt={`Image ${index}`}
@@ -74,7 +92,10 @@ function DetailProduct() {
             <div className="ad-body-right">
               <div className="color-product">
                 {/* test màu */}
-                <p>Màu Sắc:</p>
+                <div className="category-imformation">
+                  <p>Màu Sắc:</p>
+                  <p>Thay Đổi: </p>
+                </div>
                 <div
                   style={{ marginLeft: "15px", width: "80%", display: "flex" }}
                 >
@@ -89,7 +110,23 @@ function DetailProduct() {
                           backgroundColor: e.colorName,
                         }}
                       ></div>
-                      <p>SL: {e.quantity}</p>
+                      <p
+                        style={{
+                          margin: "10px",
+                        }}
+                      >
+                        SL: {e.quantity}
+                      </p>
+                      <div>
+                        <button
+                          onClick={() => {
+                            handleDelete(e.colorId);
+                          }}
+                        >
+                          Xóa
+                        </button>
+                        <button style={{ margin: "0 5px" }}>Sửa</button>
+                      </div>
                     </div>
                   ))}
                 </div>

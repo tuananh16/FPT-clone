@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { confirmAlert } from "react-confirm-alert";
 import "./style.scss";
 import axios from "axios";
 
@@ -20,9 +21,36 @@ function ListProductType() {
       });
   }, []);
   if (!listProductType) return null;
+  
   const handleDelete = (id) => {
-    const upDateList = listProductType.filter((e) => e.id !== id);
-    setlistProductType(upDateList);
+    confirmAlert({
+      title: "Bạn có chắc xóa sản phẩm này không",
+      buttons: [
+        {
+          label: "OK",
+          onClick: async () => {
+            try {
+              const config = {
+                headers: { Authorization: `Bearer ${token}` },
+              };
+              await axios.delete(
+                `http://localhost:3000/categories/delete?id=${id}`,
+                config
+              );
+              setlistProductType((prevData) =>
+                prevData.filter((item) => item.id !== id)
+              );
+            } catch (error) {
+              console.log("Error deleting product:", error);
+            }
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
   };
 
   return (

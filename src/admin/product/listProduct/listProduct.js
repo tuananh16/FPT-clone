@@ -77,7 +77,6 @@ function ListProduct() {
       ],
     });
   };
-  
 
   return (
     <div className="ad-home">
@@ -115,9 +114,10 @@ function ListProduct() {
                 <Link to={`/admin/admin/san-pham/chi-tiet-san-pham/${e.id}`}>
                   <button>Xem Chi Tiết</button>
                 </Link>
-                <button style={{ margin: "0 5px" }} >
-                  Sửa
-                </button>
+                <Link to={`/admin/admin/san-pham/sua/${e.id}`}>
+                  <button style={{ margin: "0 5px" }}>Sửa</button>
+                </Link>
+
                 <button onClick={() => handleDelete(e.id)}>Xóa</button>
               </td>
             </tr>

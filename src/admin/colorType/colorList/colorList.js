@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { confirmAlert } from "react-confirm-alert";
 import "./style.scss";
 import axios from "axios";
 
@@ -21,8 +22,34 @@ function ColorList() {
   }, []);
   if (!colorList) return null;
   const handleDelete = (id) => {
-    const upDateList = colorList.filter((e) => e.id !== id);
-    setColorList(upDateList);
+    confirmAlert({
+      title: "Bạn có chắc xóa sản phẩm này không",
+      buttons: [
+        {
+          label: "OK",
+          onClick: async () => {
+            try {
+              const config = {
+                headers: { Authorization: `Bearer ${token}` },
+              };
+              await axios.delete(
+                `http://localhost:3000/color/delete?id=${id}`,
+                config
+              );
+              setColorList((prevData) =>
+                prevData.filter((item) => item.id !== id)
+              );
+            } catch (error) {
+              console.log("Error deleting product:", error);
+            }
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
   };
 
   return (
@@ -42,15 +69,15 @@ function ColorList() {
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{e.id}</td>
-              <td >
+              <td>
                 <div style={{ display: "flex", justifyContent: "center" }}>
-                  <div style={{width:'80px'}}>{e.name}</div>
+                  <div style={{ width: "80px" }}>{e.name}</div>
                   <div
                     style={{
                       width: "20px",
                       height: "20px",
                       backgroundColor: e.name,
-                      marginLeft:"10px"
+                      marginLeft: "10px",
                     }}
                   ></div>
                 </div>
