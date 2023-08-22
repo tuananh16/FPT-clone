@@ -4,9 +4,9 @@ import React, { useState, useEffect } from "react";
 import { Slide } from "react-slideshow-image";
 import { confirmAlert } from "react-confirm-alert";
 import "react-slideshow-image/dist/styles.css";
+import { Link } from "react-router-dom";
 
 function DetailProduct() {
-  
   const token = localStorage.getItem("token");
   const [detailProduct, setDetailProduct] = useState("");
   const path = window.location.href;
@@ -29,16 +29,23 @@ function DetailProduct() {
                 config
               );
 
-              const updatedModules = detailProduct.module.filter(
-                (item) => item.id !== productDetailId
-              );
-
-              setDetailProduct((prevDetailProduct) => ({
-                ...prevDetailProduct,
-                module: updatedModules,
-              }));
+              // Lấy dữ liệu mới sau khi xóa và cập nhật trạng thái
+              const configAfterDelete = {
+                headers: { Authorization: `Bearer ${token}` },
+              };
+              axios
+                .get(
+                  `http://localhost:3000/product/productdetails?id=${id}`,
+                  configAfterDelete
+                )
+                .then((response) => {
+                  setDetailProduct(response.data.data);
+                })
+                .catch((error) => {
+                  console.log("Lỗi khi tải dữ liệu mới sau khi xóa:", error);
+                });
             } catch (error) {
-              console.log("Error deleting product:", error);
+              console.log("Lỗi khi xóa sản phẩm:", error);
             }
           },
         },
@@ -50,6 +57,7 @@ function DetailProduct() {
     });
   };
 
+  console.log(detailProduct);
   // ======= sửa màu ================
   // ================================
   useEffect(() => {
@@ -65,7 +73,8 @@ function DetailProduct() {
         console.log("lỗi");
         setDetailProduct(error);
       });
-  }, [detailProduct]);
+  }, []);
+  // console.log(id)
   return (
     <div>
       {detailProduct && (
@@ -170,7 +179,11 @@ function DetailProduct() {
                         >
                           Xóa
                         </button>
-                        <button style={{ margin: "0 5px" }}>Sửa</button>
+                        <Link
+                          to={`/admin/admin/san-pham/chi-tiet-san-pham/sua/${e.productDetailId}`}
+                        >
+                          <button style={{ margin: "0 5px" }}>Sửa</button>
+                        </Link>
                       </div>
                     </div>
                   ))}
