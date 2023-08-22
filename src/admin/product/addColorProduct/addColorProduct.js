@@ -1,15 +1,16 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-import "./style.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
+import "./style.scss";
 
 function AddColorProduct() {
   const token = localStorage.getItem("token");
-  const [colorProduct, setColorProduct] = useState({
+  const [data, setData] = useState([]);
+  const [addColor, setAddColor] = useState({
     id: "",
-    color: "",
-    quantity: 1, // Fixed the typo in the property name
+    color: 0,
+    quantity: 1,
   });
 
   useEffect(() => {
@@ -17,65 +18,87 @@ function AddColorProduct() {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .get("http://localhost:3000/color/list", config)
+      .get("http://localhost:3000/product/add-product-metadata", config)
       .then((response) => {
-        if (response.data && response.data.length > 0) {
-          setColorProduct(response.data[0]);
-        }
+        setData(response.data.data);
       })
       .catch((error) => {
-        console.log(error, "loi");
+        console.error("Error:", error);
+        setData([]);
       });
-  }, [token]);
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setAddColor((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    };
     axios
-      .post("http://localhost:3000/color/add", colorProduct, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      .post(
+        "http://localhost:3000/product/add-product-metadata",
+        addColor,
+        config
+      )
       .then((response) => {
-        toast.success("Color product added successfully");
-        setColorProduct({
-          id: "",
-          color: "",
-          quantity: 1,
-        });
+        console.log(response)
+        if (response.data.status === true) {
+          toast.success("Color product added successfully");
+          setAddColor({
+            id: "",
+            color: "",
+            quantity: 1,
+          });
+        } else if (response.data.message === "Id Invalid") {
+          toast.error("ID không tồn tại");
+        } else if (response.data.message === "Color Existed") {
+          toast.error("Màu hiện có");
+        }
       })
       .catch((error) => {
-        toast.error("An error occurred");
-        console.log(error);
+        toast.error("Lỗi");
+        console.error(
+          "Đã xảy ra lỗi:",
+          error.response ? error.response.data : error.message
+        );
       });
   };
 
+  console.log(addColor);
+
   return (
     <div className="ad-home">
-      <h2>Thêm Màu Cho Sản Phẩm</h2>
+      <h1>Thêm màu cho sản phẩm</h1>
       <form onSubmit={handleSubmit}>
-        <br />
-        <label htmlFor="id">Vui Lòng Nhập ID Sản Phẩm</label>
+        <p>Nhập ID sản phẩm</p>
         <input
-          className="subcategory-input"
           type="text"
           name="id"
-          value={colorProduct.id}
-          onChange={(e) =>
-            setColorProduct({ ...colorProduct, id: e.target.value })
-          }
+          value={addColor.id}
+          onChange={handleChange}
           required
         />
-        <br />
-
-        <label htmlFor="color">Vui Lòng Chọn Loại Màu</label>
+        <p>Chọn màu cho sản phẩm</p>
         <select
-          value={colorProduct.colorId}
-          name="colorId"
-          onChange=''
+          value={addColor.color}
+          name="color"
+          onChange={handleChange}
           required
         >
           <option disabled>--Chọn--</option>
-          {colorProduct.colors.map((e, index) => (
+          {data.map((e, index) => (
             <option
               key={index}
               value={e.id}
@@ -85,22 +108,17 @@ function AddColorProduct() {
             </option>
           ))}
         </select>
-        <br />
-
-        <label htmlFor="quantity">Vui Nhập Số Lượng</label>
+        <p>Nhập số lượng sản phẩm</p>
         <input
-          className="subcategory-input"
           type="number"
           name="quantity"
-          value={colorProduct.quantity}
-          onChange={(e) =>
-            setColorProduct({ ...colorProduct, quantity: e.target.value })
-          }
-          required
+          min="1"
+          value={addColor.quantity}
+          onChange={handleChange}
         />
-        <br />
-
-        <button type="submit">Gửi</button>
+        <button name="submit" type="submit">
+          GỬI
+        </button>
       </form>
       <ToastContainer />
     </div>

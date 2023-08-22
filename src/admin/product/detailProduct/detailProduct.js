@@ -37,7 +37,7 @@ function DetailProduct() {
       {detailProduct && (
         <div className="ad-home">
           <div className="ad-header-detail">
-            <div style={{ display: "flex", alignItems: "baseline" }}>
+            <div style={{ display: "flex", alignItems: "baseline" ,width:'40%'}}>
               <h1>{detailProduct.name}</h1>
               <p style={{ margin: 0, paddingLeft: "10px" }}>
                 MSP:{detailProduct.id}

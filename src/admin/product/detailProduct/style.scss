@@ -1,4 +1,8 @@
 .ad-home {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
     .ad-header-detail {
         display: flex;
         align-items: center;
@@ -11,21 +15,31 @@
         h1 {
             font-size: 45px;
             margin: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         .ad-price {
             display: flex;
             align-items: baseline;
+            width: 25%;
 
             h2 {
                 margin: 0;
                 font-size: 30px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
 
             span {
                 margin-left: 10px;
                 text-decoration: line-through;
                 color: #99a2aa;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
         }
     }

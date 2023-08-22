@@ -22,6 +22,7 @@ function ColorList() {
         console.log(error, "loi");
       });
   }, []);
+  // console.log(colorList)
   if (!colorList) return null;
   const handleDelete = (id) => {
     confirmAlert({

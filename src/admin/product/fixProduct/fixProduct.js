@@ -6,19 +6,19 @@ import "./style.scss";
 
 function FixProduct() {
   const token = localStorage.getItem("token");
+  const path = window.location.href;
+  const id = path.split("/").pop(7);
 
   const [productData, setProductData] = useState({
     name: "",
     price: 0,
     oldprice: 0,
-    categoryId: "1",
+    categoryId: "",
     cpu: "",
     ram: 0,
     rom: 0,
     screen: 0,
     weight: 0,
-    colorId: "24",
-    quantity: 1,
     coverImage: null,
     Images: [],
   });
@@ -29,9 +29,17 @@ function FixProduct() {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .get("http://localhost:3000/product/create", config)
+      .get(`http://localhost:3000/product/update?id=${id}`, config)
       .then((response) => {
+        const updatedData = {
+          ...response.data.data,
+          coverImg: `http://localhost:3001/${response.data.data.coverImg}`,
+          imgList: response.data.data.imgList.map(
+            (imgPath) => `http://localhost:3001/${imgPath}`
+          ),
+        };
         setData(response.data);
+        setProductData(updatedData);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -39,8 +47,9 @@ function FixProduct() {
       });
   }, []);
   if (!data) return <div>Loading...</div>;
-
+  console.log(data);
   // ============== post =====================
+
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
 
@@ -63,10 +72,8 @@ function FixProduct() {
       }));
     }
   };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     const formData = new FormData();
     for (const key in productData) {
       if (key === "Images") {
@@ -77,43 +84,55 @@ function FixProduct() {
         formData.append(key, productData[key]);
       }
     }
-
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
       },
     };
-
     try {
       const response = await axios.post(
-        "http://localhost:3000/product/create",
+        "http://localhost:3000/product/update",
         formData,
         config
       );
-      toast.success("🦄 Tạo sản phẩm thành công!", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      setProductData({
-        name: "",
-        price: 0,
-        oldprice: 0,
-        categoryId: "1",
-        cpu: "",
-        ram: 0,
-        rom: 0,
-        screen: 0,
-        weight: 0,
-        coverImage: "",
-        Images: [""],
-      });
+      console.log(response);
+      if (response.status === true) {
+        toast.success("🦄 update sản phẩm thành công!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        setProductData({
+          name: "",
+          price: 0,
+          oldprice: 0,
+          categoryId: "1",
+          cpu: "",
+          ram: 0,
+          rom: 0,
+          screen: 0,
+          weight: 0,
+          coverImage: "",
+          Images: [""],
+        });
+      } else {
+        toast.error("update lỗi sản phẩm thành công!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
     } catch (error) {
       console.error(
         "Đã xảy ra lỗi:",
@@ -224,17 +243,16 @@ function FixProduct() {
             onChange={handleChange}
             placeholder="Nhập tên Trọng lượng"
           />
-          
           <p>Ảnh đại diện</p>
           <input
-            required
+            // required
             name="coverImage"
             type="file"
             onChange={handleChange}
           />
           <p>Ảnh sản phẩm</p>
           <input
-            required
+            // required
             name="Images"
             type="file"
             onChange={handleChange}
