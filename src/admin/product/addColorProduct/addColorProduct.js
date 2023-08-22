@@ -10,9 +10,8 @@ function AddColorProduct() {
   const [addColor, setAddColor] = useState({
     id: "",
     color: 0,
-    quantity: 1,
+    quantity: 0,
   });
-
   useEffect(() => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
@@ -39,41 +38,45 @@ function AddColorProduct() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    };
-    axios
-      .post(
-        "http://localhost:3000/product/add-product-metadata",
-        addColor,
-        config
-      )
-      .then((response) => {
-        console.log(response)
-        if (response.data.status === true) {
-          toast.success("Color product added successfully");
-          setAddColor({
-            id: "",
-            color: "",
-            quantity: 1,
-          });
-        } else if (response.data.message === "Id Invalid") {
-          toast.error("ID không tồn tại");
-        } else if (response.data.message === "Color Existed") {
-          toast.error("Màu hiện có");
-        }
-      })
-      .catch((error) => {
-        toast.error("Lỗi");
-        console.error(
-          "Đã xảy ra lỗi:",
-          error.response ? error.response.data : error.message
-        );
-      });
+    if (addColor.color === 0) {
+      toast.error("ko chọn màu");
+    } else {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      };
+      axios
+        .post(
+          "http://localhost:3000/product/add-product-metadata",
+          addColor,
+          config
+        )
+        .then((response) => {
+          console.log(response);
+          if (response.data.status === true) {
+            toast.success("Color product added successfully");
+            setAddColor({
+              id: "",
+              color: "",
+              quantity: 1,
+            });
+          } else if (response.data.message === "Id Invalid") {
+            toast.error("ID không tồn tại");
+          } else if (response.data.message === "Color Existed") {
+            toast.error("Màu hiện có");
+          }
+        })
+        .catch((error) => {
+          console.log(error.response);
+          toast.error("Lỗi");
+          // console.error(
+          //   "Đã xảy ra lỗi:",
+          //   error.response ? error.response.data : error.message
+          // );
+        });
+    }
   };
 
   console.log(addColor);
@@ -97,7 +100,7 @@ function AddColorProduct() {
           onChange={handleChange}
           required
         >
-          <option disabled>--Chọn--</option>
+          <option>--Chọn--</option>
           {data.map((e, index) => (
             <option
               key={index}
@@ -116,7 +119,7 @@ function AddColorProduct() {
           value={addColor.quantity}
           onChange={handleChange}
         />
-        <button name="submit" type="submit">
+        <button style={{ marginTop: "15px" }} name="submit" type="submit">
           GỬI
         </button>
       </form>
