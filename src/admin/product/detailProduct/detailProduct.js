@@ -2,20 +2,55 @@ import "./style.scss";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Slide } from "react-slideshow-image";
+import { confirmAlert } from "react-confirm-alert";
 import "react-slideshow-image/dist/styles.css";
 
 function DetailProduct() {
+  
   const token = localStorage.getItem("token");
   const [detailProduct, setDetailProduct] = useState("");
   const path = window.location.href;
   // console.log(path.split('/').pop(7))
   const id = path.split("/").pop(7);
   // ======== xóa màu =================
-  const handleDelete = (colorId) => {
-    console.log(colorId);
-  };
-  // ======= sửa màu ================
+  const handleDelete = (productDetailId) => {
+    confirmAlert({
+      title: "Bạn có chắc xóa sản phẩm này không",
+      buttons: [
+        {
+          label: "OK",
+          onClick: async () => {
+            try {
+              const config = {
+                headers: { Authorization: `Bearer ${token}` },
+              };
+              await axios.delete(
+                `http://localhost:3000/product/delete-product-metadata?productId=${id}&productDetailsId=${productDetailId}`,
+                config
+              );
 
+              const updatedModules = detailProduct.module.filter(
+                (item) => item.id !== productDetailId
+              );
+
+              setDetailProduct((prevDetailProduct) => ({
+                ...prevDetailProduct,
+                module: updatedModules,
+              }));
+            } catch (error) {
+              console.log("Error deleting product:", error);
+            }
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
+  };
+
+  // ======= sửa màu ================
   // ================================
   useEffect(() => {
     const config = {
@@ -30,22 +65,27 @@ function DetailProduct() {
         console.log("lỗi");
         setDetailProduct(error);
       });
-  }, []);
-  console.log(detailProduct);
+  }, [detailProduct]);
   return (
     <div>
       {detailProduct && (
         <div className="ad-home">
           <div className="ad-header-detail">
-            <div style={{ display: "flex", alignItems: "baseline" ,width:'40%'}}>
+            <div
+              style={{ display: "flex", alignItems: "baseline", width: "40%" }}
+            >
               <h1>{detailProduct.name}</h1>
               <p style={{ margin: 0, paddingLeft: "10px" }}>
                 MSP:{detailProduct.id}
               </p>
             </div>
-            <h2>Tổng sản phẩm: <span
-              style={{color:"#000"}}
-            >{detailProduct.totalQuantity}</span> sp</h2>
+            <h2>
+              Tổng sản phẩm:{" "}
+              <span style={{ color: "#000" }}>
+                {detailProduct.totalQuantity}
+              </span>{" "}
+              sp
+            </h2>
 
             <div className="ad-price">
               <h2>
@@ -125,7 +165,7 @@ function DetailProduct() {
                       <div>
                         <button
                           onClick={() => {
-                            handleDelete(e.colorId);
+                            handleDelete(e.productDetailId);
                           }}
                         >
                           Xóa

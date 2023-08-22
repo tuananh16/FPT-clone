@@ -11,6 +11,7 @@ function AddColorProduct() {
     id: "",
     color: 0,
     quantity: 0,
+   
   });
   useEffect(() => {
     const config = {

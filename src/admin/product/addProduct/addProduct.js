@@ -11,13 +11,13 @@ function AddProduct() {
     name: "",
     price: 0,
     oldprice: 0,
-    categoryId: "1",
+    categoryId: 0,
     cpu: "",
     ram: 0,
     rom: 0,
     screen: 0,
     weight: 0,
-    colorId: "24",
+    colorId: 0,
     quantity: 1,
     coverImage: null,
     Images: [],
@@ -78,49 +78,53 @@ function AddProduct() {
       }
     }
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-      },
-    };
+    if (productData.categoryId === 0 || productData.colorId === 0) {
+      toast.error("chưa nhập đủ thông tin");
+    } else {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      };
 
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/product/create",
-        formData,
-        config
-      );
-      toast.success("🦄 Tạo sản phẩm thành công!", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      setProductData({
-        name: "",
-        price: 0,
-        oldprice: 0,
-        categoryId: "1",
-        cpu: "",
-        ram: 0,
-        rom: 0,
-        screen: 0,
-        weight: 0,
-        colorId: "1",
-        quantity: 1,
-        coverImage: "",
-        Images: [""],
-      });
-    } catch (error) {
-      console.error(
-        "Đã xảy ra lỗi:",
-        error.response ? error.response.data : error.message
-      );
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/product/create",
+          formData,
+          config
+        );
+        toast.success("🦄 Tạo sản phẩm thành công!", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        setProductData({
+          name: "",
+          price: 0,
+          oldprice: 0,
+          categoryId: 0,
+          cpu: "",
+          ram: 0,
+          rom: 0,
+          screen: 0,
+          weight: 0,
+          colorId: 0,
+          quantity: 1,
+          coverImage: "",
+          Images: [""],
+        });
+      } catch (error) {
+        console.error(
+          "Đã xảy ra lỗi:",
+          error.response ? error.response.data : error.message
+        );
+      }
     }
   };
   // console.log(colorId)
@@ -136,7 +140,7 @@ function AddProduct() {
             onChange={handleChange}
             required
           >
-            <option disabled>--Chọn--</option>
+            <option>--Chọn--</option>
             {data.categories.map((e, index) => (
               <option key={index} value={e.id}>
                 {e.categoryName}
@@ -159,12 +163,12 @@ function AddProduct() {
             onChange={handleChange}
             required
           >
-            <option disabled>--Chọn--</option>
+            <option>--Chọn--</option>
             {data.colors.map((e, index) => (
               <option
                 key={index}
                 value={e.id}
-                style={{ backgroundColor: e.name , color:'#fff'}}
+                style={{ backgroundColor: e.name, color: "#fff" }}
               >
                 {e.name}
               </option>
