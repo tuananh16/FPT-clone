@@ -1,0 +1,12 @@
+.picture-frame {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-right: 5px;
+    i{
+        position: absolute;
+        right: 5%;
+        top:2%;
+        cursor: pointer;
+    }
+}

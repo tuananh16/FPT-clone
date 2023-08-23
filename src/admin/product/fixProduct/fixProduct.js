@@ -3,12 +3,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import "./style.scss";
-
+// console.log("Run")
+let deletedImgUrl = "";
+let deletedCoverImg = "";
 function FixProduct() {
   const token = localStorage.getItem("token");
   const path = window.location.href;
   const id = path.split("/").pop(7);
-
+  // console.log("Run");
   const [productData, setProductData] = useState({
     name: "",
     price: 0,
@@ -23,7 +25,7 @@ function FixProduct() {
     Images: [],
   });
   const [data, setData] = useState(null);
-
+  // console.log(productData)
   useEffect(() => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
@@ -33,10 +35,8 @@ function FixProduct() {
       .then((response) => {
         const updatedData = {
           ...response.data.data,
-          coverImg: `http://localhost:3001/${response.data.data.coverImg}`,
-          imgList: response.data.data.imgList.map(
-            (imgPath) => `http://localhost:3001/${imgPath}`
-          ),
+          coverImg: response.data.data.coverImg,
+          imgList: response.data.data.imgList.map((imgPath) => imgPath),
         };
         setData(response.data);
         setProductData(updatedData);
@@ -47,12 +47,32 @@ function FixProduct() {
       });
   }, []);
   if (!data) return <div>Loading...</div>;
-  console.log(data);
-  // ============== post =====================
 
+  // ============== post =====================
+  const deleteImg = (index) => {
+    deletedImgUrl += productData.imgList[index] + "||";
+
+    //đoạn này là xóa 1 giá trị
+    const updatedVisibleImages = productData.imgList.filter(
+      (_, i) => i !== index
+    );
+    const updatedProductData = {
+      ...productData,
+      imgList: updatedVisibleImages,
+    };
+    setProductData(updatedProductData);
+  };
+  // xóa ảnh đại diện
+  const deleteImg2 = () => {
+    deletedCoverImg = productData.coverImg;
+    const updatedProductData = {
+      ...productData,
+      coverImg: "",
+    };
+    setProductData(updatedProductData);
+  };
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
-
     if (type === "file") {
       if (name === "coverImage") {
         setProductData((prevData) => ({
@@ -72,75 +92,78 @@ function FixProduct() {
       }));
     }
   };
+  console.log(data);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData();
-    for (const key in productData) {
-      if (key === "Images") {
-        productData.Images.forEach((image) => {
-          formData.append("Images", image);
-        });
-      } else {
-        formData.append(key, productData[key]);
+    if (productData.categoryId === 0) {
+      toast.error("Chưa chọn loại sản phẩm");
+    } else {
+      const formData = new FormData();
+      for (const key in productData) {
+        if (key === "Images") {
+          productData.Images.forEach((image) => {
+            formData.append("Images", image);
+          });
+        } else {
+          formData.append(key, productData[key]);
+        }
       }
-    }
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-      },
-    };
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/product/update",
-        formData,
-        config
-      );
-      console.log(response);
-      if (response.status === true) {
-        toast.success("🦄 update sản phẩm thành công!", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-        setProductData({
-          name: "",
-          price: 0,
-          oldprice: 0,
-          categoryId: "1",
-          cpu: "",
-          ram: 0,
-          rom: 0,
-          screen: 0,
-          weight: 0,
-          coverImage: "",
-          Images: [""],
-        });
-      } else {
-        toast.error("update lỗi sản phẩm thành công!", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      try {
+        formData.append("deletedImgUrl", deletedImgUrl);
+        formData.append("deletedCoverImg", deletedCoverImg);
+        const response = await axios.post(
+          "http://localhost:3000/product/update",
+          formData,
+          config
+        );
+        console.log(response);
+        if (response.data.status === true) {
+          toast.success("🦄 update sản phẩm thành công!");
+        } else if (
+          response.data.message ===
+          "If you delete all image, you must add atlease a new one. "
+        ) {
+          toast.error("Không thể xóa tất cả ảnh sản phẩm");
+        } else if (
+          response.data.message ===
+          "If you delete cover image, you must add a new one. If you delete all image, you must add atlease a new one. "
+        ) {
+          toast.error('Không bỏ trống ảnh đại diện và sản phẩm');
+        } else if (
+          response.data.message ===
+          "If you delete cover image, you must add a new one. "
+        ) {
+          toast.error("Bạn xóa ảnh đại diện cần thêm ảnh mới");
+        } else if (
+          response.data.message ===
+          "If you want to add new cover image, you must delete the old one. "
+        ) {
+          toast.error("Nếu bạn muốn thêm ảnh đại diện mới cần xóa ảnh cũ");
+        }
+        else{
+          toast.error("Lỗi")
+        }
+      } catch (error) {
+        if (error.response.data === 401) {
+          toast.error("Lỗi ");
+        } else {
+          console.log(1111);
+          console.error(
+            "Đã xảy ra lỗi:",
+            error.response ? error.response.data : error.message
+          );
+        }
+        //
       }
-    } catch (error) {
-      console.error(
-        "Đã xảy ra lỗi:",
-        error.response ? error.response.data : error.message
-      );
     }
   };
-  // console.log(colorId)
   return (
     <div className="ad-home">
       <h2>Thay Đổi Thông Tin Sản Phẩm</h2>
@@ -153,7 +176,7 @@ function FixProduct() {
             onChange={handleChange}
             required
           >
-            <option disabled>--Chọn--</option>
+            <option>--Chọn--</option>
             {data.categories.map((e, index) => (
               <option key={index} value={e.id}>
                 {e.categoryName}
@@ -205,8 +228,8 @@ function FixProduct() {
             required
             type="number"
             name="ram"
-            min="8"
-            step="4"
+            min="1"
+            step="1"
             value={productData.ram}
             onChange={handleChange}
             placeholder="Nhập tên Ram"
@@ -244,13 +267,36 @@ function FixProduct() {
             placeholder="Nhập tên Trọng lượng"
           />
           <p>Ảnh đại diện</p>
+          <div className="picture-frame">
+            <i className="fa-solid fa-x" onClick={deleteImg2}></i>
+            <img
+              style={{ width: "100px", height: "100px" }}
+              src={`http://localhost:3000/${productData.coverImg}`}
+            />
+          </div>
           <input
             // required
             name="coverImage"
             type="file"
             onChange={handleChange}
+            style={{ width: "300px" }}
           />
+
           <p>Ảnh sản phẩm</p>
+          <div style={{ display: "flex" }}>
+            {productData.imgList.map((e, index) => (
+              <div className="picture-frame" key={index}>
+                <i
+                  className="fa-solid fa-x"
+                  onClick={() => deleteImg(index)}
+                ></i>
+                <img
+                  style={{ width: "100px", height: "100px" }}
+                  src={`http://localhost:3000/${e}`}
+                />
+              </div>
+            ))}
+          </div>
           <input
             // required
             name="Images"
