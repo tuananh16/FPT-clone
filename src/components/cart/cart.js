@@ -71,7 +71,7 @@ function Cart({ cart, removeItem, onPurchase }) {
     setOrder(true);
   };
   // const calculatedPrice = productDetail.price - 1900000;
-
+  // console.log(cart)
   // lấy thông tin form
 
   return (
@@ -112,7 +112,7 @@ function Cart({ cart, removeItem, onPurchase }) {
                 <div className="body-buy">
                   <div className="product-cart">
                     <div className="product-cart-img">
-                      <img src={item.img} />
+                      <img src={`http://localhost:3000/${item.coverImg}`} />
                     </div>
                     <div className="product-cart-info">
                       <div className="product-cart-inside">

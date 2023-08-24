@@ -1,10 +1,14 @@
-// import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Index from "./admin/index";
 import Layout from "./components/layout/layout";
+import axios from "axios";
+
 
 function App() {
+  
   const role = localStorage.getItem("role");
+
   setTimeout(() => {
     const storedUsername = localStorage.getItem("username");
     
@@ -17,6 +21,7 @@ function App() {
     }
   }, 24 * 60 * 60 * 1000);
   
+  // console.log(data)
   return (
     <div className="App">
       <Routes>
