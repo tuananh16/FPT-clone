@@ -1,8 +1,9 @@
 import "./headerDetail.scss";
-import { highlightsPhones, laptopHot,tabletHot} from "../../Body/data";
+import { highlightsPhones, laptopHot, tabletHot } from "../../Body/data";
 import { useEffect, useState } from "react";
 import SlideShowDetail from "./slideShowDetail";
 import BuyNow from "../buyNow/buyNow";
+import axios from "axios";
 
 function HeaderDetail() {
   const suggestBundled = [
@@ -64,6 +65,7 @@ function HeaderDetail() {
   ];
 
   const [buyNow, setBuyNow] = useState(false);
+  const token = localStorage.getItem("token");
 
   const handleClick = () => {
     setBuyNow(true);
@@ -74,27 +76,42 @@ function HeaderDetail() {
 
   const [productDetail, setProductDetail] = useState("");
 
+  // useEffect(() => {
+  //   const path = window.location.href;
+  //   let arrDevice = null;
+  //   if (path.indexOf("dien-thoai") != -1) {
+  //     arrDevice = highlightsPhones.filter(
+  //       (items) => items.id == path.split("/")[path.split("/").length - 1]
+  //     )[0];
+  //     setProductDetail(arrDevice);
+  //   } else if (path.indexOf("tablet") != -1) {
+  //     arrDevice = tabletHot.filter(
+  //       (items) => items.id == path.split("/")[path.split("/").length - 1]
+  //     )[0];
+  //     setProductDetail(arrDevice);
+  //   } else {
+  //     arrDevice = laptopHot.filter(
+  //       (items) => items.id == path.split("/")[path.split("/").length - 1]
+  //     )[0];
+  //     setProductDetail(arrDevice);
+  //   }
+  // }, []);
   useEffect(() => {
     const path = window.location.href;
-    let arrDevice = null;
-    if (path.indexOf("dien-thoai") != -1) {
-      arrDevice = highlightsPhones.filter(
-        (items) => items.id == path.split("/")[path.split("/").length - 1]
-      )[0];
-      setProductDetail(arrDevice);
-    } else if (path.indexOf("tablet") != -1) {
-      arrDevice = tabletHot.filter(
-        (items) => items.id == path.split("/")[path.split("/").length - 1]
-      )[0];
-      setProductDetail(arrDevice);
-    } else {
-      arrDevice = laptopHot.filter(
-        (items) => items.id == path.split("/")[path.split("/").length - 1]
-      )[0];
-      setProductDetail(arrDevice);
-    }
+    const id = path.split("/").pop(7);
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    axios
+      .get(`http://localhost:3000/product/product-details?id=${id}`, config)
+      .then((response) => {
+        setProductDetail(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error, "loi");
+      });
   }, []);
-
+  // console.log(productDetail)
   return (
     <div className="wrap-header-detail">
       {productDetail && (
@@ -140,7 +157,7 @@ function HeaderDetail() {
             <div className="body-bottom-detail">
               <div className="left-detail">
                 <div className="slide-show-detail">
-                  <SlideShowDetail/>
+                  <SlideShowDetail data ={productDetail}/>
                 </div>
                 <div className="feature">
                   <a href="/">
@@ -159,24 +176,24 @@ function HeaderDetail() {
                 <div className="param-detail">
                   <ul>
                     <li>
-                    <i className="fa-solid fa-mobile-screen-button"></i>
-                    <p>6.55 inch, AMOLED, FHD+, 1080 x 2400 Pixels</p>
+                      <i className="fa-solid fa-mobile-screen-button"></i>
+                      <p>6.55 inch, AMOLED, FHD+, 1080 x 2400 Pixels</p>
                     </li>
                     <li>
-                    <i className="fa-solid fa-circle-notch"></i>
-                    <p>50.0 MP + 8.0 MP + 2.0 MP </p>
+                      <i className="fa-solid fa-circle-notch"></i>
+                      <p>50.0 MP + 8.0 MP + 2.0 MP </p>
                     </li>
                     <li>
-                    <i className="fa-solid fa-camera-retro"></i>
-                    <p>32.0 MP + 8.0 MP  </p>
+                      <i className="fa-solid fa-camera-retro"></i>
+                      <p>32.0 MP + 8.0 MP </p>
                     </li>
                     <li>
-                    <i className="fa-solid fa-microchip"></i>
-                    <p>Snapdragon 7 Gen 1 </p>
+                      <i className="fa-solid fa-microchip"></i>
+                      <p>Snapdragon 7 Gen 1 </p>
                     </li>
                     <li>
-                    <i className="fa-regular fa-hard-drive"></i>
-                    <p>128 GB </p>
+                      <i className="fa-regular fa-hard-drive"></i>
+                      <p>128 GB </p>
                     </li>
                   </ul>
                   <a href="/">Xem thông tin kỹ thuật</a>
@@ -191,8 +208,20 @@ function HeaderDetail() {
               <div className="right-detail">
                 <div className="price-detail">
                   <div className="price-left">
-                    <div className="price-main"> {new Intl.NumberFormat('vi-VN').format(productDetail.price) } đ </div>
-                    <div className="price-cost"> {new Intl.NumberFormat('vi-VN').format(productDetail.oldPrice) } đ</div>
+                    <div className="price-main">
+                      {" "}
+                      {new Intl.NumberFormat("vi-VN").format(
+                        productDetail.price
+                      )}{" "}
+                      đ{" "}
+                    </div>
+                    <div className="price-cost">
+                      {" "}
+                      {new Intl.NumberFormat("vi-VN").format(
+                        productDetail.oldPrice
+                      )}{" "}
+                      đ
+                    </div>
                   </div>
                   <div className="price-right">
                     <p>Trả góp chỉ từ</p>
@@ -207,25 +236,25 @@ function HeaderDetail() {
                 <div className="select-GB">
                   <div className="box-GB">
                     <label className="radio">
-                      <input type="radio" defaultChecked  name="contact" />
+                      <input type="radio" defaultChecked name="contact" />
                       128GB
                     </label>
                   </div>
                   <div className="box-GB">
                     <label className="radio">
-                      <input type="radio"  name="contact" />
+                      <input type="radio" name="contact" />
                       256GB
                     </label>
                   </div>
                   <div className="box-GB">
                     <label className="radio">
-                      <input type="radio"  name="contact" />
+                      <input type="radio" name="contact" />
                       512GB
                     </label>
                   </div>
                   <div className="box-GB">
                     <label className="radio">
-                      <input type="radio"  name="contact" />
+                      <input type="radio" name="contact" />
                       1TB
                     </label>
                   </div>
@@ -244,7 +273,7 @@ function HeaderDetail() {
                       className="box-img"
                       style={{ backgroundColor: "yellow" }}
                     ></div>
-                    <input type="radio"  name="color" />
+                    <input type="radio" name="color" />
                     <p>Vàng</p>
                   </div>
                   <div className="machine-color">
@@ -252,7 +281,7 @@ function HeaderDetail() {
                       className="box-img"
                       style={{ backgroundColor: "black" }}
                     ></div>
-                    <input type="radio"  name="color" />
+                    <input type="radio" name="color" />
                     <p>Đen</p>
                   </div>
                   <div className="machine-color">
@@ -260,7 +289,7 @@ function HeaderDetail() {
                       className="box-img"
                       style={{ backgroundColor: "silver" }}
                     ></div>
-                    <input type="radio"  name="color" />
+                    <input type="radio" name="color" />
                     <p>Xám</p>
                   </div>
                 </div>
@@ -397,7 +426,13 @@ function HeaderDetail() {
                       Mua hàng cũ: {productDetail.name}
                     </p>
                     <p>
-                      Giá từ: <span>{new Intl.NumberFormat('vi-VN').format(productDetail.price *0.8) } đ </span>
+                      Giá từ:{" "}
+                      <span>
+                        {new Intl.NumberFormat("vi-VN").format(
+                          productDetail.price * 0.8
+                        )}{" "}
+                        đ{" "}
+                      </span>
                     </p>
                   </a>
                 </div>
@@ -430,7 +465,9 @@ function HeaderDetail() {
                                 {e.oldPrice}
                               </span>
                             </div>
-                            <button className="cartBtn">Thêm vào giỏ hàng</button>
+                            <button className="cartBtn">
+                              Thêm vào giỏ hàng
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -468,7 +505,9 @@ function HeaderDetail() {
                                   {e.oldPrice}
                                 </span>
                               </div>
-                              <button className="cartBtn">Thêm vào giỏ hàng</button>
+                              <button className="cartBtn">
+                                Thêm vào giỏ hàng
+                              </button>
                             </div>
                             <div
                               style={{
